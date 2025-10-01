@@ -1,0 +1,49 @@
+/* Focus In Expand Animation */
+@keyframes focus-in-expand-normal {
+  0% {
+    letter-spacing: -0.5em;
+    filter: blur(12px);
+    opacity: 0;
+  }
+  100% {
+    filter: blur(0px);
+    opacity: 1;
+  }
+}
+
+.focus-in-expand-normal {
+  animation: focus-in-expand-normal 0.8s cubic-bezier(0.250, 0.460, 0.450, 0.940)
+    0s 1 normal both;
+}
+/* Floating animation */
+@keyframes floating {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-15px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+.floating-text {
+  animation: floating 3s ease-in-out infinite;
+}
+/* Floating Animation for Cards */
+@keyframes floating {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+.floating-card {
+  animation: floating 4s ease-in-out infinite;
+}

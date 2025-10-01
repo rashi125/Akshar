@@ -1,0 +1,249 @@
+:root {
+  --desk-bg: #a0d2eb;
+  --book-cover: #d2b48c;
+  --page-bg: #fdf5e6;
+  --text-color: #5c3e2a;
+  --accent-color-1: #e57373;
+  --accent-color-2: #81c784;
+  --accent-color-3: #64b5f6;
+}
+
+
+.font-handwriting {
+  font-family: 'Patrick Hand', cursive;
+}
+
+.font-storybook {
+  font-family: 'Comic Neue', cursive;
+}
+
+.book-container {
+  width: 95vw;
+  max-width: 1200px;
+  height: 90vh;
+  margin-top: 5vh;
+  perspective: 2500px;
+  filter: drop-shadow(0px 25px 20px rgba(0, 0, 0, 0.2));
+}
+
+.book {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 1.2s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+}
+
+.page {
+  position: relative;
+  width: 50%;
+  height: 100%;
+  background-color: var(--page-bg);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem 3rem;
+  color: var(--text-color);
+  transition: transform 1.2s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+}
+
+.page--front {
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+.page--back {
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+
+.page.left {
+  border-right: 1px solid #e0c8a0;
+}
+
+.page.right {
+  border-left: 1px solid #e0c8a0;
+}
+
+.page.flipped {
+  transform: rotateY(-180deg);
+  z-index: 2;
+}
+
+.book-cover {
+  position: absolute;
+  width: 50%;
+  height: 100%;
+  background-color: var(--book-cover);
+  border-radius: 10px;
+  transform-style: preserve-3d;
+}
+
+.book-cover--front {
+  transform-origin: left center;
+  transition: transform 1.2s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+  left: 50%;
+}
+
+.book-cover--back {
+  left: 0;
+  z-index: -2;
+}
+
+.book-cover--front.open {
+  transform: rotateY(-180deg);
+}
+
+.book-spine {
+  position: absolute;
+  left: calc(50% - 15px);
+  width: 30px;
+  height: 100%;
+  background: linear-gradient(to right, #a5845c 0%, #c3a47d 30%, #c3a47d 70%, #a5845c 100%);
+  z-index: 0;
+  transform: translateZ(-2px);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.page-binding {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 16px;
+  transform: translateX(-50%);
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  padding: 2rem 0;
+}
+
+.stitch {
+  width: 2px;
+  height: 12px;
+  background-color: #8c6f4b;
+  transform: rotate(15deg);
+}
+
+.page-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+}
+
+.storybook-input {
+  background-color: transparent;
+  border: none;
+  border-bottom: 2px dashed var(--accent-color-3);
+  color: var(--text-color);
+  font-family: 'Patrick Hand', cursive;
+  text-align: center;
+  font-size: 2.25rem;
+  padding-bottom: 0.5rem;
+}
+
+.storybook-input:focus {
+  outline: none;
+  border-bottom: 2px solid var(--accent-color-3);
+}
+
+.storybook-input::placeholder {
+  color: rgba(92, 62, 42, 0.4);
+}
+
+.storybook-button {
+  font-family: 'Comic Neue', cursive;
+  font-weight: 700;
+  font-size: 1.25rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 2rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  color: white;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.storybook-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+}
+
+.page-turn-btn {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  background: var(--accent-color-2);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  z-index: 10;
+}
+
+/* 📱 Responsive Styles */
+@media (max-width: 768px) {
+  .book-container {
+    width: 100vw;
+    height: auto;
+    margin-top: 2vh;
+    perspective: 1500px;
+  }
+
+  .book {
+    flex-direction: column;
+  }
+
+  .page {
+    width: 100%;
+    height: auto;
+    padding: 1.5rem 1rem;
+    margin-bottom: 1rem;
+    border-radius: 10px;
+  }
+
+  .book-cover,
+  .book-spine,
+  .page-binding {
+    display: none;
+  }
+
+  .storybook-input {
+    font-size: 1.5rem;
+  }
+
+  .storybook-button {
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+  }
+
+  .page-content {
+    padding: 1rem;
+  }
+
+  .material-icons {
+    font-size: 3rem !important;
+  }
+
+  .page-turn-btn {
+    width: 40px;
+    height: 40px;
+    bottom: 10px;
+    right: 10px;
+  }
+}
