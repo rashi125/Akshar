@@ -255,7 +255,7 @@ const EyeSpeech = ({ theme, toggleTheme }) => {
   // ------------------- JSX (UNCHANGED) --------------------
   return (
     <div className="flex flex-col">
-      <Navbar theme={theme} toggleTheme={toggleTheme} />
+     
       <div
         style={{
           backgroundColor: "#e3f2fd",
@@ -285,10 +285,10 @@ const EyeSpeech = ({ theme, toggleTheme }) => {
                 MY PLAYBOOK
               </h2>
               <nav className="flex justify-center space-x-2 sm:space-x-4 mb-8">
-                <a className="overflow-hidden [clip-path:polygon(0_0,100%_0,100%_85%,85%_100%,0_100%,0%_85%)] bg-blue-100 text-blue-800 px-4 py-2 text-lg font-bold rounded-t-lg hover:bg-blue-200 transition" >EYE</a>
-                <a className="overflow-hidden [clip-path:polygon(0_0,100%_0,100%_85%,85%_100%,0_100%,0%_85%)] bg-yellow-100 text-yellow-800 px-4 py-2 text-lg font-bold rounded-t-lg hover:bg-yellow-200 transition" >SPEECH</a>
-                <a className="overflow-hidden [clip-path:polygon(0_0,100%_0,100%_85%,85%_100%,0_100%,0%_85%)] bg-green-100 text-green-800 px-4 py-2 text-lg font-bold rounded-t-lg hover:bg-green-200 transition" >COMBINED</a>
-                <a className="overflow-hidden [clip-path:polygon(0_0,100%_0,100%_85%,85%_100%,0_100%,0%_85%)] bg-red-100 text-red-800 px-4 py-2 text-lg font-bold rounded-t-lg hover:bg-red-200 transition" >Result</a>
+                <a className="overflow-hidden [clip-path:polygon(0_0,100%_0,100%_85%,85%_100%,0_100%,0%_85%)] bg-blue-100 text-blue-800 px-4 py-2 text-lg font-bold rounded-t-lg hover:bg-blue-200 transition" href="/" >Home</a>
+                <a className="overflow-hidden [clip-path:polygon(0_0,100%_0,100%_85%,85%_100%,0_100%,0%_85%)] bg-yellow-100 text-yellow-800 px-4 py-2 text-lg font-bold rounded-t-lg hover:bg-yellow-200 transition" href="/handwriting">Playbook2</a>
+                <a className="overflow-hidden [clip-path:polygon(0_0,100%_0,100%_85%,85%_100%,0_100%,0%_85%)] bg-green-100 text-green-800 px-4 py-2 text-lg font-bold rounded-t-lg hover:bg-green-200 transition" href="/sol" >Enhancer</a>
+                <a className="overflow-hidden [clip-path:polygon(0_0,100%_0,100%_85%,85%_100%,0_100%,0%_85%)] bg-red-100 text-red-800 px-4 py-2 text-lg font-bold rounded-t-lg hover:bg-red-200 transition" href="/quiz" >QuirkQuest</a>
               </nav>
 
               {/* Eye Gaze Card */}
@@ -452,13 +452,7 @@ const EyeSpeech = ({ theme, toggleTheme }) => {
             </div>
           </div>
         </div>
-          <button 
-            onClick={() => navigate("/handwriting")}
-            className="page-turn-btn absolute bottom-6 right-6 p-4 bg-red-600 text-white rounded-full shadow-lg hover:bg-red-700 transition" 
-            id="turn-page-btn"
-        >
-              <span className="material-icons">arrow_forward_ios</span>
-            </button>
+         
       </div>
     </div>
   );

@@ -40,3 +40,20 @@ body.dark {
 .btn-primary:hover {
   opacity: 0.9;
 }
+@keyframes popUp {
+  0% {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.pop-up-text {
+  animation: popUp 1s ease-out forwards;
+}

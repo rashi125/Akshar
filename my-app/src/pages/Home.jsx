@@ -4,7 +4,7 @@ import AboutDyslexia from "./About";
 
 const HOME = () => {
   return (
-    <main className="min-h-screen flex flex-col w-full relative overflow-hidden bg-[#F3E8FF] text-gray-900">
+    <main className="min-h-screen flex flex-col w-full relative overflow-hidden bg-oklch(78.5% 0.115 274.713) text-gray-900">
       {/* Diagonal Grid Background */}
       <div
         className="absolute inset-0 z-0 pointer-events-none"
@@ -24,13 +24,19 @@ const HOME = () => {
 
         {/* Hero Section */}
         <section className="w-full flex flex-col items-center px-6 py-12">
-          <div className="text-center mb-6">
-            <h1 className=" focus-in-expand-normal   text-black-800 text-4xl sm:text-3xl md:text-4xl lg:text-6xl font-bold leading-snug">
-              WELCOME TO AKSHAR MITR
+          <div className="text-start mb-6">
+            <h1
+              className="floating-text text-black font-extrabold text-center uppercase 
+               text-[80px] sm:text-[80px] md:text-[100px] lg:text-[180px] 
+               leading-tight tracking-tigh"
+            >
+              WELCOME TO AKSHAR MITRA
             </h1>
-            <h2 className="focus-in-expand-normal font-PlayfairDisplay text-red-600 text-xl sm:text-2xl md:text-2xl lg:text-2xl italic font-medium mt-4">
-              "Dyslexia doesn’t define intelligence—it redefines learning. Explore resources,
-              tools, and support to help every individual thrive in school, work, and life."
+
+            <h2 className="font-PlayfairDisplay text-red-600 text-xl sm:text-xl md:text-2xl lg:text-2xl italic font-medium mt-4 max-w-8xl text-start">
+              "Dyslexia doesn’t define intelligence—it redefines learning.
+              Explore resources, tools, and support to help every individual
+              thrive in school, work, and life."
             </h2>
           </div>
         </section>
@@ -38,15 +44,17 @@ const HOME = () => {
         {/* About Section */}
         <section id="about-us" className="px-6 py-8">
           <h1 className="floating-text  text-black-800 text-2xl sm:text-4xl md:text-4xl lg:text-5xl font-extrabold text-center leading-snug max-w-4xl mx-auto">
-            AKSHAR MITR
+            AKSHAR MITRA
           </h1>
-          <p className=" text-black-400 font-PlayfairDisplay text-base sm:text-lg md:text-xl font-medium text-center mt-6 italic mx-auto leading-relaxed">
-            At Akshar Mitr, we believe that every child deserves the right support to learn,
-            grow, and thrive—no matter their learning challenges. Our mission is to make early
-            detection and personalized support for dyslexia accessible, simple, and empowering
-            for children, parents, and educators. Dyslexia does not define a child’s
-            intelligence; it simply changes the way they process information. With the right
-            tools, we can bridge learning gaps and help children unlock their full potential.
+          <p className=" text-black-400 font-PlayfairDisplay text-base sm:text-lg md:text-xl font-medium text-center mt-6 italic mx-auto leading-snug">
+            At Akshar Mitra, we believe that every child deserves the right
+            support to learn, grow, and thrive—no matter their learning
+            challenges. Our mission is to make early detection and personalized
+            support for dyslexia accessible, simple, and empowering for
+            children, parents, and educators. Dyslexia does not define a child’s
+            intelligence; it simply changes the way they process information.
+            With the right tools, we can bridge learning gaps and help children
+            unlock their full potential.
           </p>
 
           {/* Tools Cards */}
@@ -62,8 +70,8 @@ const HOME = () => {
                 EyeSpeech Screening Tool
               </h3>
               <p className="text-gray-600 text-sm md:text-base mb-4">
-                A unique combination of speech and vision-based screening that helps identify
-                early signs of dyslexia.
+                A unique combination of speech and vision-based screening that
+                helps identify early signs of dyslexia.
               </p>
               <a
                 className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-semibold"
@@ -84,8 +92,9 @@ const HOME = () => {
                 Handwriting Detection Tool
               </h3>
               <p className="text-gray-600 text-sm md:text-base mb-4">
-                This tool uses handwriting analysis to detect dyslexia-related challenges,
-                providing valuable insights for parents and educators.
+                This tool uses handwriting analysis to detect dyslexia-related
+                challenges, providing valuable insights for parents and
+                educators.
               </p>
               <a
                 className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-semibold"
@@ -106,8 +115,8 @@ const HOME = () => {
                 QuirkQuest
               </h3>
               <p className="text-gray-600 text-sm md:text-base mb-4">
-                A structured and child-friendly quiz tool that highlights learning challenges
-                and offers initial insights.
+                A structured and child-friendly quiz tool that highlights
+                learning challenges and offers initial insights.
               </p>
               <a
                 className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-semibold"
@@ -128,8 +137,8 @@ const HOME = () => {
                 Enhancer (Reading Support Tool)
               </h3>
               <p className="text-gray-600 text-sm md:text-base mb-4">
-                Our reading companion offers text-to-speech, line-by-line reading, and
-                syllable splitting for confident learning.
+                Our reading companion offers text-to-speech, line-by-line
+                reading, and syllable splitting for confident learning.
               </p>
               <a
                 className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-semibold"
@@ -147,9 +156,9 @@ const HOME = () => {
             WHAT IS DYSLEXIA
           </h1>
           <p className="text-black-400 font-PlayfairDisplay text-base sm:text-lg md:text-xl font-medium text-center mt-6 italic mx-auto leading-relaxed">
-            Dyslexia is a neurological learning difference that affects how individuals
-            process written and spoken language, making reading and spelling more challenging
-            despite normal intelligence.
+            Dyslexia is a neurological learning difference that affects how
+            individuals process written and spoken language, making reading and
+            spelling more challenging despite normal intelligence.
           </p>
           <div className="w-full flex justify-center mt-8">
             <a

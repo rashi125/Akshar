@@ -36,7 +36,7 @@ export default function Navbar() {
             <div className="flex h-16 items-center justify-between">
               {/* Logo */}
               <div className="flex-shrink-0">
-                <h1 className="text-white font-bold text-xl">Akshar Mitr</h1>
+                <h1 className="text-white font-bold text-xl">Akshar Mitra</h1>
               </div>
 
               {/* Desktop navigation */}
