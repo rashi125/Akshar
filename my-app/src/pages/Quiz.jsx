@@ -141,19 +141,19 @@ export default function DyslexiaQuiz() {
   const result = getResultMessage(totalScore);
 
   return (
-    <div className="bg-[#E0F7FA] font-inter min-h-screen relative">
+    <div className="bg-[#fef9e2] font-inter min-h-screen relative">
       <div
         className="absolute inset-0 z-0"
-        style={{
-          backgroundImage: `
-            linear-gradient(15deg, rgba(138, 120, 182, 0.15) 25%, transparent 25%),
-            linear-gradient(-15deg, rgba(202, 122, 188, 0.15) 25%, transparent 25%),
-            linear-gradient(15deg, transparent 75%, rgba(236,72,153,0.15) 75%),
-            linear-gradient(-15deg, transparent 75%, rgba(59,130,246,0.15) 75%)
-          `,
-          backgroundSize: "40px 40px",
-          backgroundPosition: "0 0, 0 20px, 20px -20px, -20px 0px",
-        }}
+        // style={{
+        //   backgroundImage: `
+        //     linear-gradient(15deg, rgba(138, 120, 182, 0.15) 25%, transparent 25%),
+        //     linear-gradient(-15deg, rgba(202, 122, 188, 0.15) 25%, transparent 25%),
+        //     linear-gradient(15deg, transparent 75%, rgba(236,72,153,0.15) 75%),
+        //     linear-gradient(-15deg, transparent 75%, rgba(59,130,246,0.15) 75%)
+        //   `,
+        //   backgroundSize: "40px 40px",
+        //   backgroundPosition: "0 0, 0 20px, 20px -20px, -20px 0px",
+        // }}
       />
 
       <Navbar />
@@ -172,7 +172,7 @@ export default function DyslexiaQuiz() {
         {!submitted ? (
           <div className="w-full max-w-2xl">
             {/* Question Card */}
-            <div className="bg-white p-8 rounded-2xl shadow-lg border-4 border-[#4DB6AC] mb-8 relative">
+            <div className="bg-[#F7F5F2] p-8 rounded-2xl shadow-lg border-4 border-[#4DB6AC] mb-8 relative">
               <div className="absolute -top-6 -left-6 bg-[#FFC107] text-white font-fredoka text-3xl w-16 h-16 rounded-full flex items-center justify-center border-4 border-white">
                 {currentQuestion + 1}
               </div>
@@ -260,12 +260,7 @@ export default function DyslexiaQuiz() {
           </div>
         )}
 
-        <button
-          onClick={() => navigate("/sol")}
-          className="bg-blue-600 text-white px-5 py-2 rounded hover:bg-blue-700 flex items-center justify-center gap-2"
-        >
-          Next Page <span className="material-icons">arrow_forward_ios</span>
-        </button>
+     
       </main>
     </div>
   );

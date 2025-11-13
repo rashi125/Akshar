@@ -92,17 +92,18 @@ export default function DyslexiaSupport() {
     <div
       className={`app-container ${isDyslexiaFont ? "dyslexia-font" : ""}`}
       style={{
-        backgroundColor: "#fdf4ff", // soft pastel base
-        backgroundImage: `
-          linear-gradient(45deg, rgba(255, 228, 225, 0.25) 25%, transparent 25%),
-          linear-gradient(-45deg, rgba(208, 235, 255, 0.25) 25%, transparent 25%),
-          linear-gradient(45deg, transparent 75%, rgba(255, 249, 230, 0.25) 75%),
-          linear-gradient(-45deg, transparent 75%, rgba(245, 222, 255, 0.25) 75%)
-        `,
-        backgroundSize: "40px 40px",
-        backgroundPosition: "0 0, 0 20px, 20px -20px, -20px 0px",
-        minHeight: "100vh",
-        paddingBottom: "4rem",
+        backgroundColor: "#fef9e2", // soft pastel base
+      //   backgroundImage: `
+      //     linear-gradient(45deg, rgba(255, 228, 225, 0.25) 25%, transparent 25%),
+      //     linear-gradient(-45deg, rgba(208, 235, 255, 0.25) 25%, transparent 25%),
+      //     linear-gradient(45deg, transparent 75%, rgba(255, 249, 230, 0.25) 75%),
+      //     linear-gradient(-45deg, transparent 75%, rgba(245, 222, 255, 0.25) 75%)
+      //   `,
+      //   backgroundSize: "40px 40px",
+      //   backgroundPosition: "0 0, 0 20px, 20px -20px, -20px 0px",
+      //   minHeight: "100vh",
+      //   paddingBottom: "4rem",
+      // 
       }}
     >
       <Navbar />
@@ -114,7 +115,7 @@ export default function DyslexiaSupport() {
         <p className="mb-4 text-lg md:text-xl">
           Empowering readers with tools designed for clarity and comprehension.
         </p>
-        <button className="btn btn-primary" onClick={toggleFont}>
+        <button className="btn bg-[#CC9966] text-white" onClick={toggleFont}>
           {isDyslexiaFont
             ? "Disable Dyslexia-Friendly Font"
             : "Enable Dyslexia-Friendly Font"}
@@ -124,7 +125,7 @@ export default function DyslexiaSupport() {
       {/* Tools Grid */}
       <div className="tools-grid mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 px-4">
         {/* Text-to-Speech */}
-        <div className="floating-card card p-4 rounded-2xl shadow-lg bg-white transition transform hover:scale-105">
+        <div className=" card p-4 rounded-2xl shadow-lg bg-[#F7F5F2] transition transform hover:scale-105">
           <h2 className="text-xl font-bold mb-2">🔊 Text-to-Speech Reader</h2>
           <textarea
             placeholder="Paste or type text here..."
@@ -132,13 +133,13 @@ export default function DyslexiaSupport() {
             onChange={(e) => setTtsInput(e.target.value)}
             className="w-full p-2 border rounded-md mb-2"
           />
-          <button className="btn btn-primary w-full" onClick={speakText}>
+          <button className="btn bg-[#CC9966] w-full text-white" onClick={speakText}>
             Read Aloud
           </button>
         </div>
 
         {/* Line-by-Line */}
-        <div className="floating-card card p-4 rounded-2xl shadow-lg bg-white transition transform hover:scale-105">
+        <div className="card p-4 rounded-2xl shadow-lg bg-white transition transform hover:scale-105">
           <h2 className="text-xl font-bold mb-2">📖 Line-by-Line Reader</h2>
           <textarea
             placeholder="Paste or type text here to read line-by-line..."
@@ -148,7 +149,7 @@ export default function DyslexiaSupport() {
           />
           <span className="text-sm text-gray-600">Words: {lineWordCount}</span>
           <p className="text-red-600 text-sm">{lineError}</p>
-          <button className="btn btn-primary w-full mt-2" onClick={loadLines}>
+          <button className="btn bg-[#CC9966] w-full mt-2 text-white" onClick={loadLines}>
             Load Lines for Reading
           </button>
           <div className="line-display mt-2 space-y-1">
@@ -165,7 +166,7 @@ export default function DyslexiaSupport() {
           </div>
           {lines.length > 0 && (
             <button
-              className="btn btn-primary w-full mt-2"
+              className="btn bg-[#CC9966] w-full mt-2"
               onClick={highlightNextLine}
             >
               Next Line
@@ -174,7 +175,7 @@ export default function DyslexiaSupport() {
         </div>
 
         {/* Syllable Splitter */}
-        <div className="floating-card card p-4 rounded-2xl shadow-lg bg-white transition transform hover:scale-105">
+        <div className=" card p-4 rounded-2xl shadow-lg bg-white transition transform hover:scale-105">
           <h2 className="text-xl font-bold mb-2">
             🔡 Syllable Splitter (requires backend API)
           </h2>
@@ -187,7 +188,7 @@ export default function DyslexiaSupport() {
           <span className="text-sm text-gray-600">
             Words: {syllableWordCount}
           </span>
-          <button className="btn btn-primary w-full mt-2" onClick={getSyllables}>
+          <button className="btn bg-[#CC9966] w-full mt-2 text-white" onClick={getSyllables}>
             Split into Syllables
           </button>
           <p className="text-red-600 text-sm">{errorMsg}</p>

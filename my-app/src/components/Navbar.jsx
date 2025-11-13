@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import profilepic from "../assets/profilepic.jpg";
 
 const navigation = [
-  { name: "Home", href: "/" },
+  { name: "Home", href: "/home" },
   { name: "Playbook 1", href: "/test" },
   { name: "Playbook 2", href: "/handwriting" },
   { name: "QuirkQuest", href: "/quiz" },
@@ -53,7 +53,7 @@ export default function Navbar() {
             <div className="flex h-16 items-center justify-between">
               {/* Logo */}
               <div className="flex-shrink-0">
-                <h1 className="text-white font-bold text-xl">Akshar Mitra</h1>
+                <h1 className="text-yellow-100 font-bold text-3xl">Akshar Mitra</h1>
               </div>
 
               {/* Desktop navigation */}

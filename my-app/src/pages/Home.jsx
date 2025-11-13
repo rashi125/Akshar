@@ -84,10 +84,9 @@ const HOME = () => {
         {/* About Section */}
         <section id="about-us" className="px-6 py-8">
           <h1
-            className=" text-black font-bold text-center uppercase 
+            className=" text-[#B56B21] font-bold text-center uppercase 
 text-[80px] sm:text-[80px] md:text-[100px] lg:text-[120px] 
-leading-tight tracking-tight 
-[text-shadow:2px_2px_2px_black,0_0_10px_rgba(0,0,0,0.2)]"
+leading-tight tracking-tight  [text-shadow:2px_2px_2px_black,0_0_10px_rgba(0,0,0,0.2)] "
           >
             AKSHAR MITRA
           </h1>

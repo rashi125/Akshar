@@ -250,7 +250,7 @@ const EyeSpeech = ({ theme, toggleTheme }) => {
   // ------------------- JSX --------------------
   return (
     <div className="flex flex-col">
-      <Navbar/>
+      {/* <Navbar/> */}
       <div
         style={{
           backgroundColor: "#F7F5F2",
@@ -269,7 +269,7 @@ const EyeSpeech = ({ theme, toggleTheme }) => {
           {/* Left Side */}
           <div className=" w-full position-relative mx-auto playbook-binding">
             <div className="space-y-6 bg-[#fef9e2] p-6 sm:p-8 md:p-10 flex flex-col rounded-2xl shadow-lg shadow-gray-700 gap-4 flex-grow transition-all hover:shadow-2xl h-full">
-              <h2 className="text-center text-4xl md:text-6xl font-bold text-blue-600 mb-4" style={{ fontFamily: "Roboto, sans-serif" }}>MY PLAYBOOK</h2>
+              <h2 className="text-center text-4xl md:text-6xl font-bold text-[#CC9966]  mb-4" style={{ fontFamily: "Roboto, sans-serif" }}>MY PLAYBOOK</h2>
               <nav className="flex justify-center space-x-2 sm:space-x-4 mb-8">
                 <a className="overflow-hidden [clip-path:polygon(0_0,100%_0,100%_85%,85%_100%,0_100%,0%_85%)] bg-blue-100 text-blue-800 px-4 py-2 text-lg font-bold rounded-t-lg hover:bg-blue-200 transition" href="/">Home</a>
                 <a className="overflow-hidden [clip-path:polygon(0_0,100%_0,100%_85%,85%_100%,0_100%,0%_85%)] bg-yellow-100 text-yellow-800 px-4 py-2 text-lg font-bold rounded-t-lg hover:bg-yellow-200 transition" href="/handwriting">Playbook2</a>
@@ -279,7 +279,7 @@ const EyeSpeech = ({ theme, toggleTheme }) => {
 
               {/* Eye Gaze Card */}
               <div className="space-y-4 w-full bg-blue-50 dark:bg-blue-900/30 p-6 rounded-xl border border-blue-200 dark:border-blue-700 mb-6 floating">
-                <h3 className="text-blue-600 text-xl sm:text-2xl font-bold mb-3 flex items-center gap-3">
+                <h3 className="text-[#1712A3] text-xl sm:text-2xl font-bold mb-3 flex items-center gap-3">
                   <span className="material-symbols-outlined text-3xl">visibility</span>
                   Eye Gaze Game
                 </h3>
@@ -353,12 +353,12 @@ const EyeSpeech = ({ theme, toggleTheme }) => {
                   <strong className="font-bold text-xl text-green-700 mb-1">Combined Score:</strong>
                   <span className="font-semibold text-2xl text-gray-800 block mt-1">{combinedResult?.error ? <span className="text-red-500">{combinedResult.error}</span> : combinedResult?.combined !== undefined ? <><span className="text-purple-600">{combinedResult.combined.toFixed(2)}</span><span className="block mt-2 text-xl">{combinedResult.label}</span></> : "Awaiting both results..."}</span>
                 </div>
-                <button onClick={() => getCombinedResult()} disabled={!eyeResult || !speechResult} className={`transition-all hover:shadow-2xl mt-2 px-6 py-3 rounded-xl shadow-lg transition-transform transform translate-x-4 flex items-center gap-2 justify-center text-xl font-bold ${!eyeResult || !speechResult ? "bg-gray-400 cursor-not-allowed" : "bg-green-700 hover:bg-green-800"} text-white`}>
+                <button onClick={() => getCombinedResult()} disabled={!eyeResult || !speechResult} className={`transition-all hover:shadow-2xl mt-2 px-6 py-3 rounded-xl shadow-lg transition-transform transform translate-x-4 flex items-center gap-2 justify-center text-xl font-bold ${!eyeResult || !speechResult ? "bg-green-500 cursor-not-allowed" : "bg-green-700 hover:bg-green-800"} text-white`}>
                   <span className="material-symbols-outlined">model_training</span>
                   Recalculate Combined Result
                 </button>
               </div>
-              <a href="/handwriting" className="ml-5 bg-[#CC9966] hover:bg-amber-800 text-white font-semibold px-6 py-3 rounded-lg transition">Playbook2</a>
+              <a href="/handwriting" className="ml-5 bg-[#CF8B46] hover:bg-amber-800 text-white font-bold px-6 py-3 rounded-lg transition">Playbook2</a>
             </div>
           </div>
         </div>
