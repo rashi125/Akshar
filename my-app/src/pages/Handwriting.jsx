@@ -1,33 +1,18 @@
 // src/pages/HandwritingHelper.jsx
 import React, { useState } from "react";
-import "material-icons/iconfont/material-icons.css";
-import "./Handwriting.css";
 import Navbar from "../components/Navbar";
-import { useNavigate } from "react-router-dom";
+import HandwritingReport from "../HandwritingReport";
 
-const Handwriting = ({ theme, toggleTheme }) => {
-  const navigate = useNavigate();
-
-  // Form states
+const Handwriting = ({ theme }) => {
   const [childName, setChildName] = useState("");
   const [file, setFile] = useState(null);
-
-  // Result states
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [showModal, setShowModal] = useState(false);
 
-  // File selection
-  const handleFileChange = (e) => {
-    setFile(e.target.files[0]);
-  };
+  const handleFileChange = (e) => setFile(e.target.files[0]);
 
-  // Analyze handwriting
   const handleAnalyze = async () => {
-    if (!file) {
-      alert("Please upload your handwriting image first.");
-      return;
-    }
+    if (!file) return alert("Please upload your handwriting image first.");
 
     setLoading(true);
     setResult(null);
@@ -35,15 +20,7 @@ const Handwriting = ({ theme, toggleTheme }) => {
     const referenceSentence = "the quick brown fox jumps over the lazy dog";
     const userName = childName || "Anonymous";
 
-    // Guest mode: create guest ID if not present
-    let guestId = localStorage.getItem("guestId");
-    if (!guestId) {
-      guestId = crypto.randomUUID();
-      localStorage.setItem("guestId", guestId);
-    }
-
     try {
-      // Step 1: Send file to OCR endpoint
       const formData = new FormData();
       formData.append("file", file);
       formData.append("expected", referenceSentence);
@@ -55,46 +32,37 @@ const Handwriting = ({ theme, toggleTheme }) => {
       });
 
       if (!response.ok) throw new Error("Error analyzing handwriting");
-
       const ocrData = await response.json();
       setResult(ocrData);
-      setShowModal(true);
 
-      // Step 2: Send results to backend for storage
+      // Store results for guest
+      let guestId = localStorage.getItem("guestId");
+      if (!guestId) {
+        guestId = crypto.randomUUID();
+        localStorage.setItem("guestId", guestId);
+      }
+
       await fetch("http://localhost:5000/api/tests", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          userId: null, // null because guest
-          guestId: guestId, // guest identifier
+          userId: null,
+          guestId,
           testType: "handwriting",
-          data: {
-            name: userName,
-            expected: ocrData.expected,
-            ocr_output: ocrData.ocr_output,
-            char_error_rate: ocrData.char_error_rate,
-            word_error_rate: ocrData.word_error_rate,
-            substitutions: ocrData.substitutions,
-            insertions: ocrData.insertions,
-            deletions: ocrData.deletions,
-            reversed_letters: ocrData.reversed_letters,
-            dysgraphia_risk: ocrData.dysgraphia_risk,
-          },
+          data: ocrData,
           isGuest: true,
         }),
       });
-    } catch (error) {
-      console.error(error);
+    } catch (err) {
+      console.error(err);
       alert("Failed to analyze handwriting. Please try again.");
     } finally {
       setLoading(false);
     }
   };
 
-  // Download report locally
   const handleDownloadReport = () => {
     if (!result) return;
-
     const blob = new Blob([JSON.stringify(result, null, 2)], {
       type: "application/json",
     });
@@ -107,210 +75,111 @@ const Handwriting = ({ theme, toggleTheme }) => {
   };
 
   return (
-    <main className={`min-h-screen w-full relative ${theme === "dark" ? "bg-gray-900 text-gray-100" : "bg-white text-gray-900"}`}>
-      {/* Background grid */}
-      <div
-        className="absolute inset-0 z-0"
-        style={{
-          backgroundColor: theme === "dark" ? "#1f1f1f" : "#f5f5dc",
-          backgroundImage: theme === "dark"
-            ? `linear-gradient(45deg, rgba(255,255,255,0.05) 25%, transparent 25%),
-               linear-gradient(-45deg, rgba(255,255,255,0.05) 25%, transparent 25%),
-               linear-gradient(45deg, transparent 75%, rgba(255,255,255,0.05) 75%),
-               linear-gradient(-45deg, transparent 75%, rgba(255,255,255,0.05) 75%)`
-            : `linear-gradient(45deg, rgba(139, 69, 19, 0.25) 25%, transparent 25%),
-               linear-gradient(-45deg, rgba(139, 69, 19, 0.25) 25%, transparent 25%),
-               linear-gradient(45deg, transparent 75%, rgba(139, 69, 19, 0.25) 75%),
-               linear-gradient(-45deg, transparent 75%, rgba(139, 69, 19, 0.25) 75%)`,
-          backgroundSize: "40px 40px",
-          backgroundPosition: "0 0, 0 20px, 20px -20px, -20px 0px",
-        }}
-      />
+    <div>
+      <Navbar/>
+    <main className="min-h-screen bg-[#fef9e2] flex flex-col items-center justify-start py-10 transition-colors">
+   
 
-      <div className="relative z-10">
-        <Navbar />
-        <div className="flex items-center justify-center min-h-screen px-4 sm:px-6">
-          <div className="book-container max-w-[90vw] h-auto">
-            <div className="book" id="book">
-              {/* Page 1: Enter name */}
-              <div className="page left page--front" id="page1">
-                <div className="page-content text-center px-4 sm:px-6">
-                  <div className="flex flex-col sm:flex-row items-center gap-4 mb-8">
-                    <span className="material-icons text-[var(--accent-color-1)] text-5xl sm:text-6xl">
-                      edit
-                    </span>
-                    <h1 className="font-storybook text-3xl sm:text-5xl font-bold text-[var(--text-color)]">
-                      Handwriting Helper
-                    </h1>
-                  </div>
+      <div className="w-full max-w-4xl bg-[#F7F5F2]  rounded-2xl shadow-xl p-8 md:p-12 space-y-8">
+        <header className="text-center">
+          <h1 className="text-4xl font-bold text-slate-900">Handwriting Helper</h1>
+          <p className="text-slate-600 mt-2">
+            Upload a handwritten sample to analyze for indicators of dysgraphia.
+          </p>
+        </header>
 
-                  <div className="mb-12 w-full max-w-md mx-auto">
-                    <label
-                      htmlFor="child-name"
-                      className="font-storybook text-xl sm:text-3xl font-bold text-[var(--text-color)] mb-4 block"
-                    >
-                      What's your name, little writer?
-                    </label>
-                    <input
-                      id="child-name"
-                      name="child-name"
-                      type="text"
-                      placeholder="Type your name here..."
-                      className="storybook-input w-full"
-                      value={childName}
-                      onChange={(e) => setChildName(e.target.value)}
-                    />
-                  </div>
-                </div>
-              </div>
-
-              {/* Page 2: Upload & Analyze */}
-              <div className="page right page--back" id="page2">
-                <div className="page-content text-center px-4 sm:px-6">
-                  <h2 className="text-2xl sm:text-4xl font-bold font-storybook text-[var(--text-color)] mb-6">
-                    Let's Check Your Writing!
-                  </h2>
-                  <p className="text-lg sm:text-xl font-handwriting text-gray-600 mb-8">
-                    Upload a picture of your handwriting to see how you're doing.
-                  </p>
-
-                  <div className="mb-10 text-center w-full max-w-2xl mx-auto">
-                    <label
-                      htmlFor="reference-sentence"
-                      className="text-xl sm:text-2xl font-bold font-storybook text-[var(--accent-color-2)] mb-3 block"
-                    >
-                      The sentence to write is:
-                    </label>
-                    <div className="bg-[#f0e8d9] border-2 border-dashed border-[var(--accent-color-2)] rounded-lg p-4 sm:p-6">
-                      <p className="text-2xl sm:text-4xl text-[var(--text-color)] font-handwriting leading-relaxed">
-                        the quick brown fox jumps over the lazy dog
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Upload + Analyze buttons */}
-                  <div className="flex flex-col sm:flex-row flex-wrap items-center justify-center gap-4">
-                    <label className="storybook-button bg-[var(--accent-color-3)] cursor-pointer">
-                      <span className="material-icons">cloud_upload</span>
-                      <span>{file ? file.name : "Upload Your Writing"}</span>
-                      <input
-                        type="file"
-                        accept="image/*"
-                        className="hidden"
-                        onChange={handleFileChange}
-                      />
-                    </label>
-
-                    <button
-                      className="storybook-button bg-[var(--accent-color-1)]"
-                      onClick={handleAnalyze}
-                      disabled={loading}
-                    >
-                      {loading ? "Analyzing..." : "Analyze Now"}
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+        {/* Name input */}
+        <div className="space-y-2">
+          <label className="text-lg font-semibold text-slate-700">Your Name</label>
+          <input
+            type="text"
+            placeholder="Type your name here..."
+            className="w-full p-3 rounded-lg border border-slate-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            value={childName}
+            onChange={(e) => setChildName(e.target.value)}
+          />
         </div>
 
-        {/* Navigate to Quiz */}
-        <button
-          onClick={() => navigate("/quiz")}
-          className="page-turn-btn"
-          id="turn-page-btn"
-        >
-          <span className="material-icons">arrow_forward_ios</span>
-        </button>
+        {/* Reference sentence */}
+        <div>
+          <label className="text-lg font-semibold text-slate-700">Reference Sentence</label>
+          <p className="mt-2 text-lg text-slate-800 bg-slate-100 p-4 rounded-lg shadow-inner">
+            the quick brown fox jumps over the lazy dog
+          </p>
+        </div>
+
+        {/* File upload */}
+        <div className="text-center">
+          <label className="cursor-pointer inline-block bg-[#CC9966] text-white font-semibold py-3 px-6 rounded-lg shadow-md hover:bg-indigo-700 transition-all duration-300 transform hover:scale-105">
+            Upload Handwriting Image
+            <input type="file" accept="image/*" className="hidden" onChange={handleFileChange} />
+          </label>
+          {file && <p className="text-slate-500 mt-3 text-sm">{file.name}</p>}
+        </div>
+
+        {/* Analyze button */}
+        <div className="text-center">
+          <button
+            onClick={handleAnalyze}
+            disabled={!file || loading}
+            className="w-full md:w-auto bg-green-500 text-white font-bold py-3 px-12 rounded-lg shadow-lg hover:bg-green-600 transition-all duration-300 transform hover:scale-105 disabled:bg-slate-400 disabled:cursor-not-allowed disabled:transform-none"
+          >
+            {loading ? "Analyzing..." : "Analyze Now"}
+          </button>
+        </div>
+
+        {/* Loader */}
+        {loading && (
+          <div className="flex flex-col items-center justify-center mt-4 space-y-2">
+            <div className="loader border-4 border-f3f3f3 border-t-4 border-t-indigo-600 rounded-full w-10 h-10 animate-spin"></div>
+            <p className="text-slate-600">Processing OCR and analysis...</p>
+          </div>
+        )}
+
+        {/* Results */}
+        {result && (
+          <div className="bg-white rounded-2xl shadow-xl p-8 md:p-12 mt-8 space-y-6">
+            <h2 className="text-3xl font-bold text-slate-800 text-center mb-4">Analysis Results</h2>
+             {result && <HandwritingReport result={result} timestamp={new Date().toLocaleString()} />}
+            <div className={`text-center p-6 rounded-xl ${
+              result.dysgraphia_risk.includes("High") ? "bg-red-100 text-red-800 border border-red-300" :
+              result.dysgraphia_risk.includes("Moderate") ? "bg-yellow-100 text-yellow-800 border border-yellow-300" :
+              "bg-green-100 text-green-800 border border-green-300"
+            }`}>
+              <p className="text-lg font-semibold">Dysgraphia Prediction:</p>
+              <p className="text-2xl font-bold">{result.dysgraphia_risk}</p>
+            </div>
+
+            <div>
+              <h3 className="text-xl font-semibold text-slate-700 mb-2">Recognized Text (OCR Output)</h3>
+              <p className="bg-slate-50 p-4 rounded-lg text-slate-800 shadow-inner"><em>{result.ocr_output}</em></p>
+            </div>
+
+            <div>
+              <h3 className="text-xl font-semibold text-slate-700 mb-4">Error Statistics</h3>
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-4 text-center">
+                {["char_error_rate", "word_error_rate", "substitutions", "insertions", "deletions", "reversed_letters"].map((key) => (
+                  <div key={key} className="bg-slate-100 p-4 rounded-lg shadow-sm">
+                    <p className="text-sm text-slate-600">{key.replace(/_/g, " ").replace(/\b\w/g, l => l.toUpperCase())}</p>
+                    <p className="text-2xl font-bold text-slate-900">{result[key]}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="text-center">
+              <button
+                onClick={handleDownloadReport}
+                className="inline-block bg-blue-600 text-white font-semibold py-3 px-8 rounded-lg shadow-md hover:bg-blue-700 transition-all duration-300 transform hover:scale-105"
+              >
+                Download JSON Report
+              </button>
+            </div>
+          </div>
+        )}
       </div>
-
-      {/* Modal for report */}
-      {showModal && result && (
-        <div className="fixed inset-0 z-50 flex items-start justify-center pt-12">
-          <div className="absolute inset-0 bg-black bg-opacity-40" onClick={() => setShowModal(false)}></div>
-
-          <div className="relative bg-white shadow-lg rounded-lg w-11/12 max-w-3xl p-6 overflow-y-auto max-h-[80vh]">
-            {/* Header */}
-            <div id="header">
-              <h1>Dysgraphia Indicator Report</h1>
-              <div className="subtitle">{new Date().toLocaleString()}</div>
-            </div>
-
-            {/* Risk */}
-            {(() => {
-              let riskClass = "low";
-              if (result.dysgraphia_risk?.includes("High")) riskClass = "high";
-              else if (result.dysgraphia_risk?.includes("Moderate")) riskClass = "moderate";
-
-              return (
-                <div className={`section highlight-${riskClass}`}>
-                  <h2 className="section-title">Screening Result</h2>
-                  <p className="prediction-text">{result.dysgraphia_risk || "Not Available"}</p>
-                </div>
-              );
-            })()}
-
-            {/* Sample details */}
-            <div className="section">
-              <h2 className="section-title">Submitted Sample Details</h2>
-              <strong>Reference Sentence:</strong>
-              <p className="text-block">{result.expected}</p>
-              <strong>Recognized (OCR) Sentence:</strong>
-              <p className="text-block">{result.ocr_output}</p>
-            </div>
-
-            {/* Metrics */}
-            <div className="section">
-              <h2 className="section-title">Handwriting Analysis Metrics</h2>
-              <ul className="stats-grid">
-                <li>
-                  <span className="label">Char Error Rate</span>
-                  <span className="value">{result.char_error_rate}</span>
-                </li>
-                <li>
-                  <span className="label">Word Error Rate</span>
-                  <span className="value">{result.word_error_rate}</span>
-                </li>
-                <li>
-                  <span className="label">Substitutions</span>
-                  <span className="value">{result.substitutions}</span>
-                </li>
-                <li>
-                  <span className="label">Insertions</span>
-                  <span className="value">{result.insertions}</span>
-                </li>
-                <li>
-                  <span className="label">Deletions</span>
-                  <span className="value">{result.deletions}</span>
-                </li>
-                <li>
-                  <span className="label">Reversed Letters</span>
-                  <span className="value">{result.reversed_letters}</span>
-                </li>
-              </ul>
-            </div>
-
-            {/* Footer */}
-            <div id="footer">
-              <div className="disclaimer">
-                <strong>Disclaimer:</strong> This report is generated by an automated tool. It is not a substitute for professional diagnosis.
-              </div>
-            </div>
-
-            {/* Download / Close buttons */}
-            <div className="flex justify-end gap-2 mt-4">
-              <button className="storybook-button bg-blue-600 text-white" onClick={handleDownloadReport}>
-                Download Report
-              </button>
-              <button className="storybook-button bg-gray-400 text-white" onClick={() => setShowModal(false)}>
-                Close
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
     </main>
+    </div>
   );
 };
 

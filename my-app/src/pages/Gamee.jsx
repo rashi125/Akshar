@@ -72,7 +72,7 @@ export default function Game() {
       {/* Word Display Box */}
       <div className="text-2xl font-semibold text-gray-900 bg-white shadow-2xl px-12 py-6 rounded-2xl border border-indigo-300 min-h-[70px] flex items-center justify-center transition-all duration-300">
         {hidden ? (
-          <span className="tracking-widest text-indigo-500">●●● Hidden</span>
+          <span className="tracking-widest text-indigo-500">Guess the word</span>
         ) : (
           <span className="animate-pulse">{word}</span>
         )}

@@ -126,7 +126,7 @@ CSV_PATH = os.path.join(os.path.dirname(__file__), "eye_logs.csv")
 def save_to_csv(feats_dict):
     file_exists = os.path.isfile(CSV_PATH)
 
-    with open(CSV_PATH, "a", newline="") as f:
+    with open(CSV_PATH, "a", newline="", encoding="utf-8") as f:
         writer = csv.DictWriter(f, fieldnames=feats_dict.keys())
 
         if not file_exists:

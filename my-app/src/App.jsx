@@ -19,14 +19,13 @@ const App = () => {
   return (
     <BrowserRouter>
       <Routes>
-        {/* 👇 Redirect root (/) to Login page */}
+       
         <Route path="/" element={<Navigate to="/homee" />} />
 
         {/* Auth pages */}
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
-        
-
+  
         {/* Main app pages */}
         <Route path="/home" element={<Home />} />
         <Route path="/handwriting" element={<Handwriting />} />

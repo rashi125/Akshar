@@ -102,34 +102,38 @@ export default function DyslexiaQuiz() {
       localStorage.setItem("guestId", guestId);
     }
 
-    // Send data to backend
+    // Prepare payload for individual storage
+    const payload = {
+      guestId,
+      testType: "quiz",
+      isGuest: true,
+      quiz: {
+        score: totalScore,
+        totalQuestions: questions.length,
+        answers: answers.map((ans, i) => ({
+          question: questions[i].question,
+          selectedOption: ans !== null ? questions[i].options[ans].text : null,
+          score: ans !== null ? questions[i].options[ans].score : 0,
+        })),
+        overallRisk: result,
+      },
+      overallRisk: result, // separate field for easy query
+    };
+
+    // Send to backend
     try {
       const response = await fetch("http://localhost:5000/api/tests", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          user: null,
-          guestId: guestId,
-          testType: "quiz",
-          data: {
-            score: totalScore,
-            totalQuestions: questions.length,
-            answers: answers.map((ans, i) => ({
-              question: questions[i].question,
-              selectedOption: ans !== null ? questions[i].options[ans].text : null,
-              score: ans !== null ? questions[i].options[ans].score : 0,
-            })),
-            overallRisk: result,
-          },
-          isGuest: true,
-        }),
+        body: JSON.stringify(payload),
       });
 
       if (!response.ok) throw new Error("Failed to save quiz results");
+
       const resData = await response.json();
-      console.log("Quiz saved:", resData);
+      console.log("✅ Quiz saved:", resData);
     } catch (err) {
-      console.error("Error sending quiz to DB:", err);
+      console.error("❌ Error sending quiz to DB:", err);
     }
   };
 
@@ -142,22 +146,8 @@ export default function DyslexiaQuiz() {
 
   return (
     <div className="bg-[#fef9e2] font-inter min-h-screen relative">
-      <div
-        className="absolute inset-0 z-0"
-        // style={{
-        //   backgroundImage: `
-        //     linear-gradient(15deg, rgba(138, 120, 182, 0.15) 25%, transparent 25%),
-        //     linear-gradient(-15deg, rgba(202, 122, 188, 0.15) 25%, transparent 25%),
-        //     linear-gradient(15deg, transparent 75%, rgba(236,72,153,0.15) 75%),
-        //     linear-gradient(-15deg, transparent 75%, rgba(59,130,246,0.15) 75%)
-        //   `,
-        //   backgroundSize: "40px 40px",
-        //   backgroundPosition: "0 0, 0 20px, 20px -20px, -20px 0px",
-        // }}
-      />
-
+      <div className="absolute inset-0 z-0" />
       <Navbar />
-
       <main className="container mx-auto px-4 py-10 flex flex-col items-center relative z-10">
         {/* Header */}
         <div className="text-center mb-10">
@@ -259,8 +249,6 @@ export default function DyslexiaQuiz() {
             </div>
           </div>
         )}
-
-     
       </main>
     </div>
   );

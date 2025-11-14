@@ -140,7 +140,7 @@ export default function Navbar() {
                           <button
                             onClick={handleSignOut}
                             className={classNames(
-                              active ? "bg-blue-700" : "",
+                              active ? "bg-[#cc9966]" : "",
                               "block w-full text-left px-4 py-2 text-sm text-white"
                             )}
                           >
@@ -164,14 +164,14 @@ export default function Navbar() {
           </div>
 
           {/* Mobile menu */}
-          <Disclosure.Panel className="sm:hidden bg-blue-800">
+          <Disclosure.Panel className="sm:hidden bg-[#cc9966]">
             <div className="px-2 pt-2 pb-3 space-y-1">
               {navigation.map((item) => (
                 <Disclosure.Button
                   key={item.name}
                   as={Link}
                   to={item.href}
-                  className="block px-3 py-2 rounded-md text-base font-medium text-gray-200 hover:bg-blue-700 hover:text-white"
+                  className="block px-3 py-2 rounded-md text-base font-medium text-gray-200 hover:bg-brown hover:text-white bg-[#cc9966]"
                 >
                   {item.name}
                 </Disclosure.Button>
