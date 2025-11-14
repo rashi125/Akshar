@@ -103,12 +103,15 @@ const EyeSpeech = ({ theme, toggleTheme }) => {
       });
       const data = await res.json();
       setEyeResult(data);
+      console.log(data);
       return data;
     } catch (e) {
-      const err = { error: `Eye API not reachable: ${e.message}` };
+      const err = { error: `Eye model not reachable: ${e.message}` };
       setEyeResult(err);
       return err;
+      
     }
+   
   };
 
   // ------------------- Speech Recording --------------------
@@ -247,6 +250,7 @@ const EyeSpeech = ({ theme, toggleTheme }) => {
     saveResults();
   }, [speechResult, eyeResult]);
 
+
   // ------------------- JSX --------------------
   return (
     <div className="flex flex-col">
@@ -271,7 +275,7 @@ const EyeSpeech = ({ theme, toggleTheme }) => {
             <div className="space-y-6 bg-[#fef9e2] p-6 sm:p-8 md:p-10 flex flex-col rounded-2xl shadow-lg shadow-gray-700 gap-4 flex-grow transition-all hover:shadow-2xl h-full">
               <h2 className="text-center text-4xl md:text-6xl font-bold text-[#CC9966]  mb-4" style={{ fontFamily: "Roboto, sans-serif" }}>MY PLAYBOOK</h2>
               <nav className="flex justify-center space-x-2 sm:space-x-4 mb-8">
-                <a className="overflow-hidden [clip-path:polygon(0_0,100%_0,100%_85%,85%_100%,0_100%,0%_85%)] bg-blue-100 text-blue-800 px-4 py-2 text-lg font-bold rounded-t-lg hover:bg-blue-200 transition" href="/">Home</a>
+                <a className="overflow-hidden [clip-path:polygon(0_0,100%_0,100%_85%,85%_100%,0_100%,0%_85%)] bg-blue-100 text-blue-800 px-4 py-2 text-lg font-bold rounded-t-lg hover:bg-blue-200 transition" href="/home">Home</a>
                 <a className="overflow-hidden [clip-path:polygon(0_0,100%_0,100%_85%,85%_100%,0_100%,0%_85%)] bg-yellow-100 text-yellow-800 px-4 py-2 text-lg font-bold rounded-t-lg hover:bg-yellow-200 transition" href="/handwriting">Playbook2</a>
                 <a className="overflow-hidden [clip-path:polygon(0_0,100%_0,100%_85%,85%_100%,0_100%,0%_85%)] bg-green-100 text-green-800 px-4 py-2 text-lg font-bold rounded-t-lg hover:bg-green-200 transition" href="/sol">Enhancer</a>
                 <a className="overflow-hidden [clip-path:polygon(0_0,100%_0,100%_85%,85%_100%,0_100%,0%_85%)] bg-red-100 text-red-800 px-4 py-2 text-lg font-bold rounded-t-lg hover:bg-red-200 transition" href="/quiz">QuirkQuest</a>

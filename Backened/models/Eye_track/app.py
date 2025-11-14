@@ -7,7 +7,7 @@ from datetime import datetime
 import joblib
 import os
 from fastapi import APIRouter
-
+import csv
 eye_router = APIRouter()
 
 # ── Load model & scaler ───────────────────────────────
@@ -78,29 +78,58 @@ def predict_from_features(df_feats):
         return None
 
 # ── Utility for main.py ───────────────────────────────
+
 def get_eye_result(data=None):
-    """Used by combined-result in main.py"""
     if not data or len(data) < 5:
         return {"error": "Not enough gaze points"}
 
-    eye_history.clear()
-    for pt in data:
-        eye_history.append((pt[0], pt[1]))
+    try:
+        eye_history.clear()
+        for pt in data:
+            eye_history.append((pt[0], pt[1]))
 
-    feats = extract_gaze_features()
-    if feats is None:
-        return {"error": "Failed to extract features"}
+        feats = extract_gaze_features()
+        if feats is None:
+            return {"error": "Failed to extract features"}
+        feats_dict = feats.to_dict("records")[0]
+        prob = predict_from_features(feats)
+        if prob is None:
+            return {"error": "Prediction failed"}
 
-    prob = predict_from_features(feats)
-    if prob is None:
-        return {"error": "Prediction failed"}
+        label = "🧠 Dyslexic" if prob > 0.5 else "✔️ Typical"
+        sv_row = {
+            "timestamp": datetime.now().isoformat(),
+            **feats_dict,
+            "prediction_label": label,
+            "prediction_score": float(prob)
+        }
 
-    label = "🧠 Dyslexic" if prob > 0.5 else "✔️ Typical"
-    score=prob
-    return {"label": label,"score": round(score,2), "confidence": round(prob, 2)}
+        # Save to CSV
+        save_to_csv(sv_row)
+        return {
+            "label": label,
+            "score": round(prob, 2),
+            "confidence": round(prob, 2),
+            "raw_score": float(prob)
+        }
+
+    except Exception as e:
+        return {"error": f"Eye processing exception: {str(e)}"}
 
 # ── FastAPI endpoint ───────────────────────────────
 @eye_router.post("/result")
 def eye_result(payload: dict):
     data = payload.get("gaze_points", [])
     return get_eye_result(data)
+CSV_PATH = os.path.join(os.path.dirname(__file__), "eye_logs.csv")
+
+def save_to_csv(feats_dict):
+    file_exists = os.path.isfile(CSV_PATH)
+
+    with open(CSV_PATH, "a", newline="") as f:
+        writer = csv.DictWriter(f, fieldnames=feats_dict.keys())
+
+        if not file_exists:
+            writer.writeheader()
+
+        writer.writerow(feats_dict)

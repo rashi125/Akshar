@@ -41,7 +41,8 @@ def process_audio(audio_path: str):
     prediction_label = rule_based_predict(features)
 
     # Convert to numeric score: Dyslexic = 1, Typical = 0
-    prediction_score = 1.0 if prediction_label == "Dyslexic" else 0.0
+    prediction_score = 1.0 if prediction_label == "Likely Dyslexia" else 0.0
+
 
     return {
         "transcript": transcript,

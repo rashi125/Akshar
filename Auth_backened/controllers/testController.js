@@ -1,44 +1,75 @@
+// controllers/testController.js
 const Test = require("../models/tests");
 const User = require("../models/user");
 
-// -------------------- Controller: Save Test Results --------------------
+// -------------------- Save Test Results --------------------
 const saveTestResults = async (req, res) => {
-  const { user, guestId, testType, data, eyeResult, speechResult, combinedResult } = req.body;
+  const {
+    user,
+    testType,
+    data,
+    eyeResult,
+    speechResult,
+    combinedResult
+  } = req.body;
 
   try {
-    let testEntry;
-
-    // -------------------- Identify user or guest --------------------
-    if (user) {
-      // Logged-in user mode
-      testEntry = new Test({ user, isGuest: false });
-    } else if (guestId) {
-      // Guest mode
-      testEntry = new Test({ guestId, isGuest: true });
-    } else {
-      return res.status(400).json({ error: "User or guestId required" });
+    // -------------------- Validate user --------------------
+    if (!user) {
+      return res.status(400).json({ error: "User is required" });
     }
+
+    const testEntry = new Test({ user, isGuest: false });
 
     // -------------------- Handle Eye + Speech Results --------------------
     if (testType === "eyeSpeech") {
-      testEntry.eyeTracking = {
-        ...eyeResult,
-        dyslexiaRisk: eyeResult?.label || "Pending",
-        riskScore: eyeResult?.score || 0
-      };
-console.log("speechResult:", speechResult);
+  const eye = eyeResult || {};
+  const speech = speechResult || {};
+  const combined = combinedResult || {};
 
+  // 🧠 Eye Tracking
+  testEntry.eyeTracking = {
+    totalFixations: eye.features?.n_fix ?? 0,
+    averageFixationDuration: eye.features?.mean_fix ?? 0,
+    fixationDurationSD: eye.features?.std_fix ?? 0,
+    averageDisplacementX: eye.features?.mean_disp_x ?? 0,
+    displacementSDX: eye.features?.std_disp_x ?? 0,
+    regressionCount: eye.features?.regression_ratio ?? 0,
+    totalReadTime: eye.features?.total_read_time ?? 0,
+    lineSwitches: eye.features?.line_switches ?? 0,
+    dyslexiaRisk: eye.label || "Pending",
+    riskScore: eye.score ?? 0,
+    confidence: eye.confidence ?? 0,
+    rawOutput: eye
+  };
+
+      // Speech Analysis
       testEntry.speechAnalysis = {
-        ...speechResult,
+        totalWords: speechResult?.totalWords || 0,
+        mispronunciations: speechResult?.mispronunciations || 0,
+        speechRate: speechResult?.speechRate || 0,
+        pauses: speechResult?.pauses || 0,
+        clarityScore: speechResult?.clarityScore || 0,
+        pronunciationAccuracy: speechResult?.pronunciationAccuracy || 0,
+        articulationRate: speechResult?.articulationRate || 0,
+        fluencyScore: speechResult?.fluencyScore || 0,
+        comments: speechResult?.comments || "",
         dyslexiaRisk: speechResult?.label || "Pending",
         riskScore: speechResult?.score || 0
       };
 
-      testEntry.overallRisk = combinedResult?.label || "Pending";
+      // Combined Result
+      testEntry.combinedResult = {
+        eyeScore: eyeResult?.score || 0,
+        speechScore: speechResult?.score || 0,
+        finalScore: combinedResult?.combined || 0,
+        label: combinedResult?.label || "Pending"
+      };
 
+      testEntry.overallRisk = combinedResult?.label || "Pending";
     }
 
-    // -------------------- Handle Handwriting Results --------------------
+    // -------------------- Handle Handwriting --------------------
     if (testType === "handwriting" && data) {
       testEntry.handwriting = {
         expectedSentence: data.expected || "",
@@ -54,45 +85,45 @@ console.log("speechResult:", speechResult);
       };
     }
 
-    // -------------------- Handle Quiz Results --------------------
+    // -------------------- Handle Quiz --------------------
     if (testType === "quiz" && data) {
       testEntry.quiz = {
         score: data.score || 0,
         totalQuestions: data.totalQuestions || 0,
         answers: data.answers || [],
       };
-      // Optionally update overallRisk based on quiz
       testEntry.overallRisk = data.overallRisk || testEntry.overallRisk;
     }
 
     // -------------------- Save Test Entry --------------------
     await testEntry.save();
-    console.log("Saved Test:", testEntry);
+    console.log("✅ Saved Test:", testEntry._id);
 
-    res.json({ message: "Test results saved successfully", testEntry });
+    res.json({
+      message: "Test results saved successfully",
+      testEntry
+    });
   } catch (err) {
-    console.error("Save Test Results error:", err);
+    console.error("❌ Save Test Results error:", err);
     res.status(500).json({ error: err.message });
   }
 };
 
-// -------------------- Controller: Get Tests by User or Guest --------------------
+// -------------------- Get Tests by User --------------------
 const getTestsByUser = async (req, res) => {
-  const { userId, guestId } = req.query;
+  const { userId } = req.query;
 
   try {
-    if (!userId && !guestId)
-      return res.status(400).json({ error: "userId or guestId query param required" });
+    if (!userId)
+      return res.status(400).json({ error: "userId query param required" });
 
-    const query = userId ? { user: userId } : { guestId };
-    const tests = await Test.find(query).sort({ createdAt: -1 });
+    const tests = await Test.find({ user: userId }).sort({ createdAt: -1 });
 
     res.json({ tests });
   } catch (err) {
-    console.error("Get Tests error:", err);
+    console.error("❌ Get Tests error:", err);
     res.status(500).json({ error: err.message });
   }
 };
 
-// -------------------- Exports --------------------
 module.exports = { saveTestResults, getTestsByUser };

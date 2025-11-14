@@ -12,17 +12,20 @@ import AboutDyslexia from './pages/About';
 import Ab from "./pages/about2";
 import Login from "./components/Login";
 import Signup from './components/Signup';
+import Homee from "./pages/Homee";
+import Gamee from "./pages/Gamee";
 
 const App = () => {
   return (
     <BrowserRouter>
       <Routes>
         {/* 👇 Redirect root (/) to Login page */}
-        <Route path="/" element={<Navigate to="/login" />} />
+        <Route path="/" element={<Navigate to="/homee" />} />
 
         {/* Auth pages */}
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+        
 
         {/* Main app pages */}
         <Route path="/home" element={<Home />} />
@@ -32,6 +35,8 @@ const App = () => {
         <Route path="/sol" element={<DyslexiaSupport />} />
         <Route path="/about" element={<AboutDyslexia />} />
         <Route path="/ab" element={<Ab />} />
+        <Route path="/homee" element={<Homee />} />
+        <Route path="/gamee" element={<Gamee />} />
       </Routes>
     </BrowserRouter>
   );

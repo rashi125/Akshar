@@ -108,7 +108,7 @@ export default function DyslexiaQuiz() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          user: null, // null for guest
+          user: null,
           guestId: guestId,
           testType: "quiz",
           data: {
@@ -252,7 +252,7 @@ export default function DyslexiaQuiz() {
                   setSubmitted(false);
                   setCurrentQuestion(0);
                 }}
-                className="bg-gray-500 text-white px-5 py-2 rounded hover:bg-gray-600"
+                className="bg-[#CC9966] text-white px-5 py-2 rounded hover:bg-brown"
               >
                 Retake Quiz 🔄
               </button>

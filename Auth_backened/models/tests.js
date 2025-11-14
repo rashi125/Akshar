@@ -1,31 +1,44 @@
+// models/tests.js
 const mongoose = require("mongoose");
 
 const TestSchema = new mongoose.Schema(
   {
     user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: false }, // optional for guest
-    guestId: { type: String }, // unique guest identifier
+    guestId: { type: String, required: false }, // add guestId for non-logged users
+
+    // -------------------- Eye Tracking --------------------
+  
 eyeTracking: {
   totalFixations: Number,
   averageFixationDuration: Number,
+  fixationDurationSD: Number,
+  averageDisplacementX: Number,
+  displacementSDX: Number,
   regressionCount: Number,
-  saccadeAmplitude: Number,
-  comments: String,
-  dyslexiaRisk: String, 
-  riskScore: Number     
+  totalReadTime: Number,
+  lineSwitches: Number,
+  dyslexiaRisk: String,
+  riskScore: Number,
+  confidence: Number,
+  rawOutput: Object
 },
 
-speechAnalysis: {
-  totalWords: Number,
-  mispronunciations: Number,
-  speechRate: Number,
-  pauses: Number,
-  clarityScore: Number,
-  comments: String,
-  dyslexiaRisk: String, 
-  riskScore: Number     
-}
-,
+    // -------------------- Speech Analysis --------------------
+    speechAnalysis: {
+      totalWords: Number,
+      mispronunciations: Number,
+      speechRate: Number,
+      pauses: Number,
+      clarityScore: Number,
+      pronunciationAccuracy: Number,
+      articulationRate: Number,
+      fluencyScore: Number,
+      comments: String,
+      dyslexiaRisk: String, 
+      riskScore: Number
+    },
 
+    // -------------------- Handwriting --------------------
     handwriting: {
       expectedSentence: String,
       ocrOutput: String,
@@ -39,6 +52,7 @@ speechAnalysis: {
       comments: String,
     },
 
+    // -------------------- Quiz --------------------
     quiz: {
       score: Number,
       totalQuestions: Number,
@@ -51,9 +65,16 @@ speechAnalysis: {
       ],
     },
 
+    // -------------------- Combined --------------------
     overallRisk: String,
-    isGuest: { type: Boolean, default: false },
+    combinedResult: {
+      eyeScore: Number,
+      speechScore: Number,
+      finalScore: Number,
+      label: String,
+    },
 
+  
     createdAt: { type: Date, default: Date.now },
   },
   { timestamps: true }
