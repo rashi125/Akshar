@@ -4,20 +4,21 @@ import { useNavigate } from "react-router-dom";
 export default function Home() {
   const navigate = useNavigate();
 
-//   const images = [
-//     "https://via.placeholder.com/900x300?text=Slide+1",
-//     "https://via.placeholder.com/900x300?text=Slide+2",
-//     "https://via.placeholder.com/900x300?text=Slide+3"
-//   ];
+  const images = [
+    "./images/caraousel1.jpg",
+    "./images/caraousel2.jpg",
+    "./images/caraousel3.jpg",
+    "./images/caraousel4.jpg"
+  ];
 
   const [index, setIndex] = useState(0);
 
-//   useEffect(() => {
-//     const interval = setInterval(() => {
-//       setIndex((prev) => (prev + 1) % images.length);
-//     }, 3000);
-//     return () => clearInterval(interval);
-//   }, []);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setIndex((prev) => (prev + 1) % images.length);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <div className="w-full min-h-screen bg-[#fef9e2] ">
@@ -38,30 +39,33 @@ export default function Home() {
       </div>
 
       {/* Carousel */}
-      {/* <div className="w-full flex justify-center mt-6">
-        <div className="w-11/12 md:w-3/4 rounded-xl overflow-hidden shadow-lg border border-blue-300">
-          <img
-            src={images[index]}
-            alt="carousel slide"
-            className="w-full h-48 md:h-72 object-cover"
-          />
-        </div>
-      </div> */}
+<div className="w-full flex justify-center mt-6">
+  <div className="w-11/12 md:w-3/4 rounded-xl overflow-hidden shadow-lg border border-blue-300">
+    <img
+      src={images[index]}
+      alt="carousel slide"
+      className="w-full h-72 md:h-[400px] object-cover"
+    />
+  </div>
+</div>
+
 
       {/* About Section */}
       <section className="w-11/12 md:w-3/4 mx-auto mt-10 p-6 bg-[#F7F5F2] rounded-xl shadow-lg">
         <h2 className="text-2xl font-extrabold text-[#CC9966] mb-3">
-          About Dyslexia
+          Our Services
         </h2>
         <p className="text-gray-700 leading-relaxed">
-          Dyslexia is a learning difficulty that affects reading and writing skills.
-          Our platform helps users practice memory, reading, pattern recognition
-          and more through interactive games.
+          Our platform provides practical support for children with dyslexia through smart
+  assistive tools. We use speech detection to help identify pronunciation difficulties,
+  eye-tracking cues to understand reading patterns, handwriting detection to observe
+  writing challenges, and built-in reading support tools that make learning smoother
+  and more comforting for every child.
         </p>
 
         {/* Read More → /about */}
         <button
-          onClick={() => navigate("/about")}
+          onClick={() => navigate("/aboutmain")}
           className="mt-5 px-6 py-2 bg-[#CC9966] text-white font-semibold rounded-lg hover:bg-blue-700 transition"
         >
           Read More
@@ -89,3 +93,4 @@ export default function Home() {
     </div>
   );
 }
+ 

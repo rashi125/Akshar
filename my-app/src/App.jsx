@@ -14,7 +14,7 @@ import Login from "./components/Login";
 import Signup from './components/Signup';
 import Homee from "./pages/Homee";
 import Gamee from "./pages/Gamee";
-
+// import EmotionML from './pages/Emotion';
 const App = () => {
   return (
     <BrowserRouter>
@@ -25,7 +25,7 @@ const App = () => {
         {/* Auth pages */}
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
-  
+  {/* <Route path="/emotion-game" element={<EmotionML/>}/> */}
         {/* Main app pages */}
         <Route path="/home" element={<Home />} />
         <Route path="/handwriting" element={<Handwriting />} />

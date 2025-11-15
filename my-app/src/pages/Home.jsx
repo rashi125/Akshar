@@ -36,6 +36,15 @@ const cards = [
     link: "/sol",
     button: "Enhancer",
   },
+  {
+  title: "Emotion Explorer (Game)",
+  description:
+    "Play an interactive game that detects emotions from facial expressions and helps you understand feelings better.",
+  img: "https://images.unsplash.com/photo-1533089860892-a7c3b5d5b83d?w=1000&auto=format&fit=crop",
+  link: "/emotion-game",
+  button: "Play Now",
+}
+
 ];
 
 const HOME = () => {
@@ -102,36 +111,39 @@ leading-tight tracking-tight  [text-shadow:2px_2px_2px_black,0_0_10px_rgba(0,0,0
           </p>
           </section>
 
-          {/* Tools Cards */}
-      <section className="px-6 py-10">
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-10">
-        {cards.map((card, index) => (
-          <div
-            key={index}
-            className="bg-[#fef9e2] rounded-2xl shadow-md shadow-blue-900 p-6 flex flex-col items-center text-center transition hover:scale-105 hover:shadow-lg"
-          >
-            <img
-              src={card.img}
-              alt={card.title}
-              className="w-24 h-24 mb-4 object-cover"
-            />
-            <h3 className="text-lg md:text-xl font-bold text-black mb-2">
-              {card.title}
-            </h3>
-            <p className="text-gray-600 text-sm md:text-base mb-6 flex-1">
-              {card.description}
-            </p>
-
-            <Link
-              to={card.link}
-              className="bg-[#CC9966] hover:bg-amber-800 border border-white text-white px-4 py-2 rounded-lg font-bold transition-all duration-200 w-full sm:w-auto text-center"
-            >
-              {card.button}
-            </Link>
-          </div>
-        ))}
+          {/* Tools Cards as Horizontal Slider */}
+<section className="px-6 py-10">
+  <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold mb-8 text-center text-black">
+    Our Tools
+  </h2>
+  <div className="flex space-x-6 overflow-x-auto snap-x snap-mandatory scrollbar-hide py-4">
+    {cards.map((card, index) => (
+      <div
+        key={index}
+        className="flex-shrink-0 w-64 sm:w-72 md:w-80 bg-[#fef9e2] rounded-2xl shadow-md shadow-blue-900 p-6 flex flex-col items-center text-center transition hover:scale-105 hover:shadow-lg snap-center"
+      >
+        <img
+          src={card.img}
+          alt={card.title}
+          className="w-24 h-24 mb-4 object-cover"
+        />
+        <h3 className="text-lg md:text-xl font-bold text-black mb-2">
+          {card.title}
+        </h3>
+        <p className="text-gray-600 text-sm md:text-base mb-6 flex-1">
+          {card.description}
+        </p>
+        <Link
+          to={card.link}
+          className="bg-[#CC9966] hover:bg-amber-800 border border-white text-white px-4 py-2 rounded-lg font-bold transition-all duration-200 w-full sm:w-auto text-center"
+        >
+          {card.button}
+        </Link>
       </div>
-    </section>
+    ))}2
+  </div>
+</section>
+
 
         {/* Consent Popup
         {showConsentPopup && (

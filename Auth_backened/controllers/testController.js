@@ -13,7 +13,7 @@ const saveTestResults = async (req, res) => {
       user: user || null,
       guestId: guestId || null,
       testType,
-      isGuest: !user
+      isGuest: !user,
     });
 
     // -------------------- Eye + Speech --------------------
@@ -31,50 +31,45 @@ const saveTestResults = async (req, res) => {
           dyslexiaRisk: eyeResult.label || "Pending",
           riskScore: eyeResult.score ?? 0,
           confidence: eyeResult.confidence ?? 0,
+          classId: eyeResult.features?.class_id ?? 0,
           rawOutput: eyeResult,
         };
       }
 
       if (speechResult) {
         testEntry.speechAnalysis = {
-          totalWords: speechResult.totalWords || 0,
-          mispronunciations: speechResult.mispronunciations || 0,
-          speechRate: speechResult.speechRate || 0,
-          pauses: speechResult.pauses || 0,
-          clarityScore: speechResult.clarityScore || 0,
-          pronunciationAccuracy: speechResult.pronunciationAccuracy || 0,
-          articulationRate: speechResult.articulationRate || 0,
-          fluencyScore: speechResult.fluencyScore || 0,
-          comments: speechResult.comments || "",
-          dyslexiaRisk: speechResult.label || "Pending",
-          riskScore: speechResult.score || 0,
-          rawOutput: speechResult
+          totalWords: speechResult.totalWords ?? 0,
+          mispronunciations: speechResult.mispronunciations ?? 0,
+          speechRate: speechResult.speechRate ?? 0,
+          pauses: speechResult.mean_pause ?? 0,
+          clarityScore: speechResult.clarityScore ?? 0,
+          pronunciationAccuracy: speechResult.pronunciationAccuracy ?? 0,
+          articulationRate: speechResult.articulation_rate ?? 0,
+          fluencyScore: speechResult.fluencyScore ?? 0,
+          comments: speechResult.comments ?? "",
+
+          // Python metrics
+          wer: speechResult.wer ?? 0,
+          meanWordDuration: speechResult.mean_word_duration ?? 0,
+          meanPause: speechResult.mean_pause ?? 0,
+          pauseCount: speechResult.pause_count ?? 0,
+          wpm: speechResult.wpm ?? 0,
+          rawOutput: speechResult,
         };
       }
 
       if (combinedResult) {
         testEntry.combinedResult = {
-          eyeScore: eyeResult?.score || 0,
-          speechScore: speechResult?.score || 0,
-          finalScore: combinedResult.combined || 0,
+          eyeScore: eyeResult?.score ?? 0,
+          speechScore: speechResult?.score ?? 0,
+          finalScore: combinedResult.combined ?? 0,
           label: combinedResult.label || "Pending",
-          rawOutput: combinedResult
+          rawOutput: combinedResult,
         };
         testEntry.overallRisk = combinedResult.label || "Pending";
       }
     }
 
-    // -------------------- Quiz --------------------
-  if (testType === "quiz" && req.body.quiz) {
-  const { score, totalQuestions, answers, overallRisk } = req.body.quiz;
-  testEntry.quiz = {
-    score: score || 0,
-    totalQuestions: totalQuestions || 0,
-    answers: answers || [],
-    overallRisk: overallRisk || "Pending",
-  };
-  testEntry.overallRisk = overallRisk || testEntry.overallRisk;
-}
 
     // -------------------- Handwriting --------------------
     if (testType === "handwriting" && data) {

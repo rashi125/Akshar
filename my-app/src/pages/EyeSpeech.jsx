@@ -109,9 +109,7 @@ const EyeSpeech = ({ theme, toggleTheme }) => {
       const err = { error: `Eye model not reachable: ${e.message}` };
       setEyeResult(err);
       return err;
-      
     }
-   
   };
 
   // ------------------- Speech Recording --------------------
@@ -161,7 +159,12 @@ const EyeSpeech = ({ theme, toggleTheme }) => {
         try {
           const res = await fetch("http://127.0.0.1:8000/speech/result", { method: "POST", body: formData });
           const data = await res.json();
-          setSpeechResult(JSON.parse(JSON.stringify(data)));
+
+          
+          const prediction = Number(data.prediction ?? 0);
+          setSpeechResult({ ...data, prediction, label: prediction >= 0.5 ? "Dyslexic" : "Typical" });
+          // ----------------------------------------------------------------
+
         } catch (e) {
           setSpeechResult({ prediction: 0, error: `Speech API not reachable: ${e.message}` });
         }
@@ -181,14 +184,12 @@ const EyeSpeech = ({ theme, toggleTheme }) => {
     const eye = eyeData || eyeResult || (await sendEyeData());
 
     if (!speechResult || speechResult.error) {
-      if (!combinedResult || combinedResult.error !== "Please record speech first.")
-        setCombinedResult({ error: "Please record speech first." });
+      setCombinedResult({ error: "Please record speech first." });
       return;
     }
 
     if (eye.error) {
-      if (!combinedResult || combinedResult.error !== eye.error)
-        setCombinedResult({ error: eye.error });
+      setCombinedResult({ error: eye.error });
       return;
     }
 
@@ -210,70 +211,66 @@ const EyeSpeech = ({ theme, toggleTheme }) => {
   };
 
   // ------------------- Save EyeSpeech to DB --------------------
-  const saveTestToDB = async () => {
-    try {
-      let guestId = localStorage.getItem("guestId");
-      if (!localStorage.getItem("userId") && !guestId) {
-        guestId = "guest-" + Date.now() + Math.floor(Math.random() * 1000);
-        localStorage.setItem("guestId", guestId);
-      }
+ const saveTestToDB = async () => {
+  try {
+    let guestId = localStorage.getItem("guestId");
+    if (!localStorage.getItem("userId") && !guestId) {
+      guestId = "guest-" + Date.now() + Math.floor(Math.random() * 1000);
+      localStorage.setItem("guestId", guestId);
+    }
 
-      const payload = {
-        user: localStorage.getItem("userId") || null,
-        guestId: localStorage.getItem("guestId") || null,
-        testType: "eyeSpeech",
-        eyeResult,
-        speechResult,
-        combinedResult,
-      };
+    const payload = {
+      user: localStorage.getItem("userId") || null,
+      guestId: localStorage.getItem("guestId") || null,
+      testType: "eyeSpeech",
+      eyeResult,
+      speechResult,
+      combinedResult,
+    };
 
-      const res = await fetch("http://127.0.0.1:5000/api/tests", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
+    // ✅ Important: assign fetch result to 'res'
+    const res = await fetch("http://127.0.0.1:5000/api/tests", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
 
-      const data = await res.json();
-      console.log("Saved EyeSpeech data:", data);
-    } catch (err) {
-      console.error("Error saving EyeSpeech to DB:", err);
+    const data = await res.json();
+    console.log("Saved EyeSpeech data:", data);
+  } catch (err) {
+    console.error("Error saving EyeSpeech to DB:", err);
+  }
+};
+
+useEffect(() => {
+  const saveResults = async () => {
+    if (speechResult && !speechResult.error && eyeResult) {
+      await getCombinedResult();
+      await saveTestToDB();
     }
   };
+  saveResults();
+}, [speechResult, eyeResult]);
 
-  useEffect(() => {
-    const saveResults = async () => {
-      if (speechResult && !speechResult.error && eyeResult) {
-        await getCombinedResult();
-        await saveTestToDB();
-      }
-    };
-    saveResults();
-  }, [speechResult, eyeResult]);
 
+      
 
   // ------------------- JSX --------------------
   return (
     <div className="flex flex-col">
-      {/* <Navbar/> */}
       <div
-        style={{
-          backgroundColor: "#F7F5F2",
-          backgroundSize: "32px 32px",
-        }}
+        style={{ backgroundColor: "#F7F5F2", backgroundSize: "32px 32px" }}
         className="min-h-screen p-6 font-sans pt-[30px] gap-4 dark:bg-zinc-800 flex flex-col justify-center items-center"
       >
         <div
           className=" w-full max-w-9xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6 relative min-h-fit lg:min-h-[30vh]"
-          style={{
-            boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
-            borderRadius: "12px",
-            border: "1px solid #CFD8DC",
-          }}
+          style={{ boxShadow: "0 4px 12px rgba(0,0,0,0.1)", borderRadius: "12px", border: "1px solid #CFD8DC" }}
         >
-          {/* Left Side */}
+          {/* LEFT SIDE */}
           <div className=" w-full position-relative mx-auto playbook-binding">
             <div className="space-y-6 bg-[#fef9e2] p-6 sm:p-8 md:p-10 flex flex-col rounded-2xl shadow-lg shadow-gray-700 gap-4 flex-grow transition-all hover:shadow-2xl h-full">
-              <h2 className="text-center text-4xl md:text-6xl font-bold text-[#CC9966]  mb-4" style={{ fontFamily: "Roboto, sans-serif" }}>MY PLAYBOOK</h2>
+              <h2 className="text-center text-4xl md:text-6xl font-bold text-[#CC9966] mb-4" style={{ fontFamily: "Roboto, sans-serif" }}>MY PLAYBOOK</h2>
+              {/* NAV LINKS */}
               <nav className="flex justify-center space-x-2 sm:space-x-4 mb-8">
                 <a className="overflow-hidden [clip-path:polygon(0_0,100%_0,100%_85%,85%_100%,0_100%,0%_85%)] bg-blue-100 text-blue-800 px-4 py-2 text-lg font-bold rounded-t-lg hover:bg-blue-200 transition" href="/home">Home</a>
                 <a className="overflow-hidden [clip-path:polygon(0_0,100%_0,100%_85%,85%_100%,0_100%,0%_85%)] bg-yellow-100 text-yellow-800 px-4 py-2 text-lg font-bold rounded-t-lg hover:bg-yellow-200 transition" href="/handwriting">Playbook2</a>
@@ -281,7 +278,7 @@ const EyeSpeech = ({ theme, toggleTheme }) => {
                 <a className="overflow-hidden [clip-path:polygon(0_0,100%_0,100%_85%,85%_100%,0_100%,0%_85%)] bg-red-100 text-red-800 px-4 py-2 text-lg font-bold rounded-t-lg hover:bg-red-200 transition" href="/quiz">QuirkQuest</a>
               </nav>
 
-              {/* Eye Gaze Card */}
+              {/* EYE GAZE CARD */}
               <div className="space-y-4 w-full bg-blue-50 dark:bg-blue-900/30 p-6 rounded-xl border border-blue-200 dark:border-blue-700 mb-6 floating">
                 <h3 className="text-[#1712A3] text-xl sm:text-2xl font-bold mb-3 flex items-center gap-3">
                   <span className="material-symbols-outlined text-3xl">visibility</span>
@@ -307,7 +304,7 @@ const EyeSpeech = ({ theme, toggleTheme }) => {
                 <p className="text-sm text-gray-500 mt-2">Gaze Points Recorded: {gazePoints.length}</p>
               </div>
 
-              {/* Speech Analysis Card */}
+              {/* SPEECH CARD */}
               <div className="space-y-4 bg-yellow-50 p-6 rounded-xl border border-yellow-400">
                 <h3 className="text-2xl font-bold text-yellow-600 mb-2 flex items-center gap-3">
                   <span className="material-symbols-outlined text-3xl">mic</span>
@@ -334,10 +331,7 @@ const EyeSpeech = ({ theme, toggleTheme }) => {
             </div>
           </div>
 
-          {/* Divider Strip */}
-          <div className="hidden lg:block absolute top-0 bottom-0 left-1/2 w-6 bg-gray-300 pointer-events-none" style={{ transform: "translateX(-50%)", backgroundImage: "linear-gradient(to bottom, #17151586 50%, transparent 50%)", backgroundSize: "4px 24px" }}></div>
-
-          {/* Right Side */}
+          {/* RIGHT SIDE */}
           <div className="w-full transition-all hover:shadow-2xl floating bg-[#fef9e2] p-6 sm:p-8 md:p-10 flex flex-col rounded-2xl shadow-lg shadow-gray-700 gap-4 flex-grow h-full">
             <div className="space-y-6 bg-gray-300 p-6 rounded-xl border border-green-200 text-gray-700 flex-grow">
               <h2 className="text-3xl font-bold mb-4 flex items-center gap-4 text-green-700">
@@ -351,7 +345,9 @@ const EyeSpeech = ({ theme, toggleTheme }) => {
                 </div>
                 <div className="p-4 bg-white rounded-lg shadow-md">
                   <h2 className="font-bold text-xl text-yellow-600 mb-1">Speech Result:</h2>
-                  <span className="font-semibold text-2xl text-gray-800">{speechResult?.error ? <span className="text-red-500">{speechResult.error}</span> : speechResult?.prediction !== undefined ? speechResult.prediction > 0 ? <span className="text-yellow-700">🧠 Dyslexic ({speechResult.prediction.toFixed(2)})</span> : <span className="text-green-500">✔️ Typical ({speechResult.prediction.toFixed(2)})</span> : "Not recorded/analyzed"}</span>
+                  <span className="font-semibold text-2xl text-gray-800">
+                    {speechResult?.error ? <span className="text-red-500">{speechResult.error}</span> : speechResult?.prediction !== undefined ? <span className="text-yellow-700">🧠 {speechResult.label} ({speechResult.prediction.toFixed(2)})</span> : "Not recorded/analyzed"}
+                  </span>
                 </div>
                 <div className="p-4 bg-white rounded-lg shadow-md">
                   <strong className="font-bold text-xl text-green-700 mb-1">Combined Score:</strong>

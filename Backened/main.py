@@ -1,20 +1,22 @@
-# Backend/main.py
-from fastapi import FastAPI,Request
+
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.wsgi import WSGIMiddleware
-
+import socketio
 # Import routers and helper functions from your modules
 from models.Eye_track.app import eye_router, get_eye_result
 from models.speech.app import speech_router
 from models.Handwriting.app import app as handwriting_flask_app
 from models.Syllable import syllable_router
+# from Game.backend_test import adaptive_flask_app
+
 # Initialize FastAPI app
 app = FastAPI(title="Dyslexia Detection Backend")
 
 # Enable CORS (so your React frontend can talk to it)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # change to ["http://localhost:3000"] for stricter security
+    allow_origins=["*"],  # For stricter security, use ["http://localhost:3000"]
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -24,7 +26,10 @@ app.add_middleware(
 app.include_router(eye_router, prefix="/eye", tags=["Eye Tracking"])
 app.include_router(speech_router, prefix="/speech", tags=["Speech Analysis"])
 app.mount("/hand", WSGIMiddleware(handwriting_flask_app))
-app.include_router(syllable_router,prefix="/split", tags=["Syllable Analysis"])
+app.include_router(syllable_router, prefix="/split", tags=["Syllable Analysis"])
+ # Added router
+# app.mount("/adaptive", adaptive_flask_app)
+
 # ── Combined Endpoint ──────────────────────────────────────────────
 @app.post("/combined-result")
 async def combined_result(req: Request):
@@ -50,8 +55,6 @@ async def combined_result(req: Request):
 
     except Exception as e:
         return {"error": str(e)}
-
-
 
 # ── Run using Uvicorn ─────────────────────────────────────────────
 # Command: uvicorn Backend.main:app --reload
