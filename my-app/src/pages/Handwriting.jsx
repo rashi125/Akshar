@@ -4,6 +4,8 @@ import Navbar from "../components/Navbar";
 import Report from "./Report";
 
 const Handwriting = ({ theme }) => {
+  const React_API=process.env.REACT_APP_API_URL;
+  const Python_API=process.env.REACT_APP_PYTHON_API;
   const [childName, setChildName] = useState("");
   const [file, setFile] = useState(null);
   const [result, setResult] = useState(null);
@@ -26,7 +28,7 @@ const Handwriting = ({ theme }) => {
       formData.append("expected", referenceSentence);
       formData.append("name", userName);
 
-      const response = await fetch("http://localhost:8000/hand/hand", {
+      const response = await fetch(`${Python_API}/hand/hand`, {
         method: "POST",
         body: formData,
       });
@@ -42,7 +44,7 @@ const Handwriting = ({ theme }) => {
         localStorage.setItem("guestId", guestId);
       }
 
-      await fetch("http://localhost:5000/api/tests", {
+      await fetch(`${React_API}/api/tests`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -65,7 +67,7 @@ const Handwriting = ({ theme }) => {
     if (!result) return alert("No report available for download.");
 
     try {
-      const response = await fetch("http://localhost:8000/generate-report", {
+      const response = await fetch(`${Python_API}/generate-report`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(result),

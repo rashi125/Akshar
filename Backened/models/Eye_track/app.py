@@ -110,7 +110,8 @@ def get_eye_result(data=None):
             "label": label,
             "score": round(prob, 2),
             "confidence": round(prob, 2),
-            "raw_score": float(prob)
+            "raw_score": float(prob),
+            "features": feats_dict
         }
 
     except Exception as e:

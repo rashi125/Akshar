@@ -49,7 +49,8 @@ def process_audio(audio_path: str):
         "wer": round(features.get("wer", 0), 3),
         "pause_count": features.get("pause_count", 0),
         "wpm": round(features.get("wpm", 0), 2),
-        "prediction": prediction_score
+        "prediction": prediction_score,
+        "features": features
     }
 
 # -------------------- Flask Route --------------------

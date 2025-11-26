@@ -116,7 +116,7 @@ leading-tight tracking-tight  [text-shadow:2px_2px_2px_black,0_0_10px_rgba(0,0,0
   <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold mb-8 text-center text-black">
     Our Tools
   </h2>
-  <div className="flex space-x-6 overflow-x-auto snap-x snap-mandatory scrollbar-hide py-4">
+  <div className="flex flex-row gap-6 space-x-6 overflow-x-auto snap-x snap-mandatory scrollbar-hide py-4">
     {cards.map((card, index) => (
       <div
         key={index}
@@ -140,7 +140,7 @@ leading-tight tracking-tight  [text-shadow:2px_2px_2px_black,0_0_10px_rgba(0,0,0
           {card.button}
         </Link>
       </div>
-    ))}2
+    ))}
   </div>
 </section>
 

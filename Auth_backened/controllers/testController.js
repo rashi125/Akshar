@@ -86,7 +86,16 @@ const saveTestResults = async (req, res) => {
         comments: data.comments || "",
       };
     }
+ if (testType === "quiz" && data) {
+  testEntry.quiz = {
+    score: data.score ?? 0,
+    totalQuestions: data.totalQuestions ?? 0,
+    answers: data.answers ?? [],
+    overallRisk: data.overallRisk || "Unknown",
+  };
 
+  testEntry.overallRisk = data.overallRisk || "Unknown";
+}
     await testEntry.save();
 
     res.json({

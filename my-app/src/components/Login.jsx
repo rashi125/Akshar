@@ -3,6 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+  const REACT_API=process.env.REACT_APP_API_URL;
   const [form, setForm] = useState({ email: "", password: "" });
   const navigate = useNavigate();
 
@@ -23,7 +24,7 @@ const Login = () => {
     }
 
     try {
-      const res = await axios.post("http://localhost:5000/api/auth/login", form);
+      const res = await axios.post(`${REACT_API}/api/auth/login`, form);
 
       // Save user info & token
       localStorage.setItem("token", res.data.token);

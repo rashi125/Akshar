@@ -107,7 +107,7 @@ export default function DyslexiaQuiz() {
       guestId,
       testType: "quiz",
       isGuest: true,
-      quiz: {
+      data: {
         score: totalScore,
         totalQuestions: questions.length,
         answers: answers.map((ans, i) => ({

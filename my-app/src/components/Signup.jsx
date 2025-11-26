@@ -3,21 +3,30 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const Signup = () => {
-  const [form, setForm] = useState({ name: "", email: "", age: "", gender: "", password: "" });
+  const REACT_API=process.env.REACT_APP_API_URL;
+  const [form, setForm] = useState({ name: "", email: "", age: 18, gender: "Male", password: "" });
   const navigate = useNavigate();
 
-  const handleChange = e => setForm({ ...form, [e.target.name]: e.target.value });
+  const handleChange = e =>{
+    const value = e.target.name === "age" ? Number(e.target.value) : e.target.value;
+  setForm({ ...form, [e.target.name]: value });
+  }
 
-  const handleSubmit = async e => {
-    e.preventDefault();
-    try {
-      const res = await axios.post("http://localhost:5000/api/auth/signup", form);
-      localStorage.setItem("token", res.data.token);
-      navigate("/");
-    } catch (err) {
-      alert(err.response?.data?.message || "Already have account");
-    }
-  };
+  const handleSubmit = async (e) => {
+  e.preventDefault();
+  console.log("Submitting form:", form);
+  try {
+    const res = await axios.post(`${REACT_API}/api/auth/signup`, form, {
+      headers: { "Content-Type": "application/json" },
+    });
+    console.log("Response:", res.data);
+    localStorage.setItem("token", res.data.token);
+    navigate("/login");
+  } catch (err) {
+    console.error("Signup error:", err.response?.data);
+    alert(err.response?.data?.message || "Already have account");
+  }
+};
 
   return (
     <div className="flex flex-col lg:flex-row min-h-screen">

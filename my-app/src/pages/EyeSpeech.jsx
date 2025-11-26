@@ -3,7 +3,9 @@ import Navbar from "../components/Navbar";
 import { useNavigate } from "react-router-dom";
 
 const EyeSpeech = ({ theme, toggleTheme }) => {
-  // ------------------- States --------------------
+  const REACT_API=process.env.REACT_APP_API_URL;
+  const Python_API=process.env.REACT_APP_PYTHON_API;
+    // ------------------- States --------------------
   const [gazePoints, setGazePoints] = useState([]);
   const [eyeResult, setEyeResult] = useState(null);
   const [speechResult, setSpeechResult] = useState(null);
@@ -96,7 +98,7 @@ const EyeSpeech = ({ theme, toggleTheme }) => {
     }
 
     try {
-      const res = await fetch("http://127.0.0.1:8000/eye/result", {
+      const res = await fetch(`${Python_API}/eye/result`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ gaze_points: gazePoints }),
@@ -157,7 +159,7 @@ const EyeSpeech = ({ theme, toggleTheme }) => {
         formData.append("file", blob, "reading.webm");
 
         try {
-          const res = await fetch("http://127.0.0.1:8000/speech/result", { method: "POST", body: formData });
+          const res = await fetch(`${Python_API}/speech/result`, { method: "POST", body: formData });
           const data = await res.json();
 
           
@@ -197,7 +199,7 @@ const EyeSpeech = ({ theme, toggleTheme }) => {
     const speechScore = speechResult?.prediction ?? 0;
 
     try {
-      const res = await fetch("http://127.0.0.1:8000/combined-result", {
+      const res = await fetch(`${Python_API}/combined-result`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ eye_score: eyeScore, speech_score: speechScore }),
@@ -229,7 +231,7 @@ const EyeSpeech = ({ theme, toggleTheme }) => {
     };
 
     // ✅ Important: assign fetch result to 'res'
-    const res = await fetch("http://127.0.0.1:5000/api/tests", {
+    const res = await fetch(`${REACT_API}/api/tests`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),
