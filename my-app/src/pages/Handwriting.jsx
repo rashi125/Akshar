@@ -5,7 +5,7 @@ import Report from "./Report";
 
 const Handwriting = ({ theme }) => {
   const React_API=process.env.REACT_APP_API_URL;
-  const Python_API=process.env.REACT_APP_PYTHON_API;
+  const Python_API=process.env.REACT_APP_PYTHON_API||"http://localhost:5000/api";
   const [childName, setChildName] = useState("");
   const [file, setFile] = useState(null);
   const [result, setResult] = useState(null);

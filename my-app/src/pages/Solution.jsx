@@ -3,6 +3,7 @@ import "./Solution.css";
 import Navbar from "../components/Navbar";
 
 export default function DyslexiaSupport() {
+  const P_API = process.env.REACT_APP_PYTHON_API || "http://localhost:5000/api";
   const [isDyslexiaFont, setIsDyslexiaFont] = useState(false);
   const [ttsInput, setTtsInput] = useState("");
   const [lineInput, setLineInput] = useState("");
@@ -67,7 +68,7 @@ export default function DyslexiaSupport() {
   if (!text) return alert("Please enter some words to split into syllables.");
 
   try {
-    const res = await fetch("http://127.0.0.1:8000/split/split", {
+    const res = await fetch(`${P_API}/split/split`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ text }),
