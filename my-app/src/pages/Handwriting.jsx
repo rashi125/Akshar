@@ -28,7 +28,7 @@ const Handwriting = ({ theme }) => {
       formData.append("expected", referenceSentence);
       formData.append("name", userName);
 
-      const response = await fetch(`${Python_API}/hand`, {
+      const response = await fetch(`${Python_API}/hand/hand`, {
         method: "POST",
         body: formData,
       });
