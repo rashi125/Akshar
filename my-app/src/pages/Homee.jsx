@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate,Link } from "react-router-dom";
 
 export default function Home() {
   const navigate = useNavigate();
@@ -65,7 +65,7 @@ export default function Home() {
 
         {/* Read More → /about */}
         <button
-          onClick={() => navigate("/aboutmain")}
+          onClick={() => navigate("/about")}
           className="mt-5 px-6 py-2 bg-[#CC9966] text-white font-semibold rounded-lg hover:bg-blue-700 transition"
         >
           Read More

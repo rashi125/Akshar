@@ -15,8 +15,13 @@ connectDB();
 
 // Middleware
 app.use(cors({
-  origin: process.env.FRONTEND_URL,
-  credentials: true
+  origin:  [
+    process.env.FRONTEND_URL,           // https://felus.in
+    "https://felus.in",                // fallback
+    "https://akshar-4-lzvr.onrender.com", 
+    "http://localhost:3000"            // dev
+  ],
+  credentials :true
 }));
 app.use(bodyParser.json());
 app.use("/api/tests", testRoutes);
