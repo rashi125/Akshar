@@ -1,4 +1,4 @@
-![WhatsApp Image 2025-11-14 at 17 09 48](https://github.com/user-attachments/assets/e0a29f6b-25d3-4ba7-bf3b-35651532cb6c)A Dyslexia Detection & Support Platform
+A Dyslexia Detection & Support Platform
 
 Akshar Mitr is an accessibility-focused web application designed to detect early signs of dyslexia and provide supportive tools for learners. It integrates OCR, speech recognition, eye tracking, handwriting analysis, and quizzes into a unified system, with gamified assessments and reading support for detected cases.
 
