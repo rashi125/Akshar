@@ -1,4 +1,4 @@
-A Dyslexia Detection & Support Platform
+![WhatsApp Image 2025-11-14 at 17 09 48](https://github.com/user-attachments/assets/e0a29f6b-25d3-4ba7-bf3b-35651532cb6c)A Dyslexia Detection & Support Platform
 
 Akshar Mitr is an accessibility-focused web application designed to detect early signs of dyslexia and provide supportive tools for learners. It integrates OCR, speech recognition, eye tracking, handwriting analysis, and quizzes into a unified system, with gamified assessments and reading support for detected cases.
 
@@ -46,6 +46,7 @@ my-app/
  │   ├── pages/
  │   ├── App.jsx
  │   ├── index.js
+
  │   └── ...
  ├── package.json
  ├── .env
@@ -76,6 +77,14 @@ Auth_backend/
  ├── index.js
  ├── package.json
  └── .env
+ Images:
+  ![Aksahr-home](https://github.com/user-attachments/assets/d05d4308-4cb5-458e-a1e1-8c492f41e8ab)
+  ![eye-screening](https://github.com/user-attachments/assets/2ce5b4e7-1645-4481-93c4-07b1f9358e98)
+  ![handwriting](https://github.com/user-attachments/assets/42ee95e2-fe78-490d-a7ab-8c81dec1ebf0)
+  ![Quiz](https://github.com/user-attachments/assets/8ea4a16f-f58f-4ae5-89ea-bcee54168375)
+  ![![memory-game](https://github.com/user-attachments/assets/eeea3757-b4cb-445a-96d7-eee7c230b030)
+ ![reading-support](https://github.com/user-attachments/assets/c16f371b-360a-4894-8e5b-4e3837bbb079)
+
 
 📝Installation
 git clone https://github.com/rashi125/Akshar.git
