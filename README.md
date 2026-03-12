@@ -22,7 +22,7 @@ We are proud to share that Akshar Mitra: A Multimodal Integrated Framework for E
 
 This work presents Akshar Mitra, an integrated multimodal framework aimed at enabling early detection of dyslexia through OCR, speech recognition, eye tracking, handwriting analysis, and gamified assessments.
 
-Authors: Rashi Sahu, Manya Sharma, Radhika Babar, Vibha Tiwari, Rebekah Geddam, Muhammad Awais, Hemant Ghayvat
+Authors: Rashi Sahu, Manya Sharma, Radhika Babar, Vibha Tiwari, Rebekah Geddam, Muhammad Awais, Hemant Ghayvat,Ocean Agarwal
 
 🔗https://lnkd.in/eDMfgyYP
 
