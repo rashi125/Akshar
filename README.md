@@ -24,7 +24,7 @@ This work presents Akshar Mitra, an integrated multimodal framework aimed at ena
 
 Authors: Rashi Sahu, Manya Sharma, Radhika Babar, Vibha Tiwari, Rebekah Geddam, Muhammad Awais, Hemant Ghayvat,Ocean Agarwal
 
-🔗https://lnkd.in/eDMfgyYP
+https://www.frontiersin.org/journals/digital-health/articles/10.3389/fdgth.2025.1726307/full
 
 ⚙️Tech Stack
 Frontend: React.js (components, pages, assets)
