@@ -1,82 +1,141 @@
-A Dyslexia Detection & Support Platform
+# 🧠 Akshar Mitr: Dyslexia Detection & Support Platform
 
-Akshar Mitr is an accessibility-focused web application designed to detect early signs of dyslexia and provide supportive tools for learners. It integrates OCR, speech recognition, eye tracking, handwriting analysis, and quizzes into a unified system, with gamified assessments and reading support for detected cases.
+**Akshar Mitr** is an accessibility-focused web application designed to **detect early signs of dyslexia** and provide **personalized support tools** for learners. The platform integrates multiple AI-driven modalities such as OCR, speech recognition, eye tracking, handwriting analysis, and interactive assessments into a unified system.
 
-🌟 Features
-OCR Recognition: Extracts text features using EasyOCR.
+---
 
-Speech Recognition: Converts spoken input into text using OpenAI Whisper.
+## 🌟 Key Features
 
-Eye Tracking: Monitors eye movement patterns with WebGazer.js and OpenCV.
+### 🔍 Multimodal Detection
 
-Handwriting Analysis: Processes handwriting logs for deeper detection.
+* **OCR Recognition**
+  Extracts textual features from images using EasyOCR.
 
-Interactive Quiz: Provides cognitive and reading-based assessments.
+* **Speech Recognition**
+  Converts spoken input into text using OpenAI Whisper.
 
-Gamified Assessment: Engages learners with interactive tasks if dyslexia is detected.
+* **Eye Tracking**
+  Analyzes eye movement patterns using WebGazer.js and OpenCV.
 
-Reading Support Tool: Offers personalized assistance for learners with dyslexia.
+* **Handwriting Analysis**
+  Processes handwriting logs to detect irregularities associated with dyslexia.
 
-📚 Research & Publications
-We are proud to share that Akshar Mitra: A Multimodal Integrated Framework for Early Dyslexia Detection has been published in the SCIE journal Digital Health.
+---
 
-This work presents Akshar Mitra, an integrated multimodal framework aimed at enabling early detection of dyslexia through OCR, speech recognition, eye tracking, handwriting analysis, and gamified assessments.
+### 🧩 Assessment & Interaction
 
-Authors: Rashi Sahu, Manya Sharma, Radhika Babar, Vibha Tiwari, Rebekah Geddam, Muhammad Awais, Hemant Ghayvat,Ocean Agarwal
+* **Interactive Quiz**
+  Cognitive and reading-based evaluations to assess learning patterns.
 
-https://www.frontiersin.org/journals/digital-health/articles/10.3389/fdgth.2025.1726307/full
+* **Gamified Assessment**
+  Engaging activities triggered when dyslexia indicators are detected.
 
-⚙️Tech Stack
-Frontend: React.js (components, pages, assets)
+---
 
-Backend: Node.js / Express (Auth, APIs) + Python services
+### 📖 Support System
 
-Database: MongoDB Atlas
+* **Reading Assistance Tool**
+  Provides personalized learning support and reading enhancements for users diagnosed with dyslexia.
 
-AI/ML Tools: EasyOCR, OpenAI Whisper, WebGazer.js, OpenCV
+---
 
-Deployment: GitHub + Cloud Hosting
+## 📚 Research & Publication
 
-📂Project Structure
+We are proud to present our published research:
+
+**“Akshar Mitra: A Multimodal Integrated Framework for Early Dyslexia Detection”**
+Published in the SCIE-indexed journal *Digital Health*.
+
+This research introduces a comprehensive framework combining OCR, speech analysis, eye tracking, handwriting evaluation, and gamified learning for early dyslexia detection.
+
+**Authors:**
+Rashi Sahu, Manya Sharma, Radhika Babar, Vibha Tiwari, Rebekah Geddam, Muhammad Awais, Hemant Ghayvat, Ocean Agarwal
+
+🔗 https://www.frontiersin.org/journals/digital-health/articles/10.3389/fdgth.2025.1726307/full
+
+---
+
+## ⚙️ Tech Stack
+
+### 🖥️ Frontend
+
+* React.js (Components, Pages, Assets)
+
+### 🔧 Backend
+
+* Node.js / Express (Authentication & APIs)
+* Python (AI/ML Processing Services)
+
+### 🗄️ Database
+
+* MongoDB Atlas
+
+### 🤖 AI/ML Tools
+
+* EasyOCR
+* OpenAI Whisper
+* WebGazer.js
+* OpenCV
+
+### 🚀 Deployment
+
+* GitHub + Cloud Hosting
+
+---
+
+## 📂 Project Structure
+
+```
 my-app/
- ├── public/
- ├── src/
- │   ├── assets/
- │   ├── components/
- │   ├── pages/
- │   ├── App.jsx
- │   ├── index.js
+├── public/
+├── src/
+│   ├── assets/
+│   ├── components/
+│   ├── pages/
+│   ├── App.jsx
+│   ├── index.js
+│   └── ...
+├── package.json
+├── .env
+└── README.md
 
- │   └── ...
- ├── package.json
- ├── .env
- └── README.md
- Backend
- Backend/
- ├── models/
- │   ├── Eye_track/
- │   │   ├── logs/
- │   │   │   ├── eye_logs.csv
- │   │   │   ├── app.py
- │   │   │   └── ...
- │   ├── Handwriting/
- │   ├── reports/
- │   └── speech/
- │       ├── Syllable.py
- │       └── __init__.py
- ├── main.py
- ├── requirements.txt
- ├── Procfile
- └── .env
+Backend/
+├── models/
+│   ├── Eye_track/
+│   │   ├── logs/
+│   │   │   ├── eye_logs.csv
+│   │   │   ├── app.py
+│   ├── Handwriting/
+│   ├── reports/
+│   └── speech/
+│       ├── Syllable.py
+│       └── __init__.py
+├── main.py
+├── requirements.txt
+├── Procfile
+└── .env
+
 Auth_backend/
- ├── config/
- ├── controllers/
- ├── middleware/
- ├── models/
- ├── routes/
- ├── index.js
- ├── package.json
- └── .env
+├── config/
+├── controllers/
+├── middleware/
+├── models/
+├── routes/
+├── index.js
+├── package.json
+└── .env
+```
+
+---
+
+## 🖼️ Application Screens
+
+* Home Interface
+* Eye Tracking Module
+* Handwriting Analysis
+* Quiz Interface
+* Memory Game
+* Reading Support Tool
  Images:
   ![Aksahr-home](https://github.com/user-attachments/assets/d05d4308-4cb5-458e-a1e1-8c492f41e8ab)
   ![eye-screening](https://github.com/user-attachments/assets/2ce5b4e7-1645-4481-93c4-07b1f9358e98)
@@ -84,59 +143,109 @@ Auth_backend/
   ![Quiz](https://github.com/user-attachments/assets/8ea4a16f-f58f-4ae5-89ea-bcee54168375)
   ![![memory-game](https://github.com/user-attachments/assets/eeea3757-b4cb-445a-96d7-eee7c230b030)
  ![reading-support](https://github.com/user-attachments/assets/c16f371b-360a-4894-8e5b-4e3837bbb079)
+---
 
+## 📝 Installation & Setup
 
-📝Installation
+```bash
+# Clone repository
 git clone https://github.com/rashi125/Akshar.git
 cd Akshar
-Install dependencies:
+
+# Install frontend dependencies
 npm install
-Run the development server:
+
+# Run frontend
 npm run dev
+
+# Install backend dependencies
 pip install -r requirements.txt
+
+# Run backend
 python main.py
-⚙️ Configuration
+```
+
+---
+
+## ⚙️ Environment Configuration
+
+Create a `.env` file and add:
+
+```
 MONGODB_URI=your_connection_string_here
 PORT=3000
+```
 
-📖 Usage
-Launch the app locally with npm run dev.
+---
 
-Access at http://localhost:3000.
+## 📖 Usage
 
-Input text, speech, or take quizzes.
+1. Launch the application:
 
-Eye-tracking runs in real-time for deeper analysis.
+   ```
+   npm run dev
+   ```
 
-If dyslexia is detected → Gamified assessment + reading support tools.
+2. Open in browser:
 
-If not detected → User is marked free from dyslexia.
+   ```
+   http://localhost:3000
+   ```
 
-🤝 Contributing
+3. Provide inputs:
+
+   * Text
+   * Speech
+   * Quiz responses
+
+4. System behavior:
+
+   * Runs real-time eye tracking
+   * Performs multimodal analysis
+
+5. Output:
+
+   * If dyslexia is detected → Gamified assessment + support tools
+   * If not → User marked as non-dyslexic
+
+---
+
+## 🤝 Contributing
+
 Contributions are welcome!
 
-Fork the repo
+bash
+# Fork the repository
+# Create a new branch
+git checkout -b feature-name
 
-Create a branch (git checkout -b feature-name)
+# Commit changes
+git commit -m "Add feature"
 
-Commit changes (git commit -m "Add feature")
+# Push changes
+git push origin feature-name
 
-Push (git push origin feature-name)
+Then open a Pull Request 🚀
 
-Open a Pull Request
+---
 
-📜 License
-This project is licensed under the MIT License.
+## 📜 License
 
-🙌 Acknowledgements
-EasyOCR for text recognition
+This project is licensed under the **MIT License**.
 
-OpenAI Whisper for speech-to-text
+---
 
-WebGazer.js & OpenCV for eye-tracking integration
+## 🙌 Acknowledgements
 
-MongoDB Atlas for cloud database support
+* EasyOCR for text recognition
+* OpenAI Whisper for speech-to-text
+* WebGazer.js & OpenCV for eye tracking
+* MongoDB Atlas for database support
 
+---
 
+## 💡 Summary
 
+Akshar Mitr is a **powerful, research-backed, multimodal platform** that combines AI and accessibility to **identify and support learners with dyslexia early**, making education more inclusive and effective.
 
+---
